@@ -11,14 +11,10 @@
             "id": "c9bdf425507c7933",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/format/template-study.md.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "template-study.md"
+              "title": "새 탭"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/format/template-study.md.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "template-study.md 의 백링크"
+              "title": "백링크"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/format/template-study.md.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "template-study.md 의 나가는 링크"
+              "title": "나가는 링크"
             }
           },
           {
@@ -180,8 +174,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0d80f53d6f66b2db",
+  "active": "1e82da4b1c1feec7",
   "lastOpenFiles": [
+    "docs/format/template-study.md",
+    "docs/index.md",
+    "docs/_config.yml",
     "무제.md",
     "docs/format/template-study.md.md",
     "docs/_config.yml.md",
