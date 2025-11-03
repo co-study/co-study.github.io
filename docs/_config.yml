@@ -20,6 +20,7 @@ plugins:
   - jekyll-remote-theme
   - jekyll-github-metadata
   - jekyll-titles-from-headings
+  - jekyll-feed
 title_from_headings:
   enabled: true
   strip_title: false

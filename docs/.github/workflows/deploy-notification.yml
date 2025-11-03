@@ -1,0 +1,94 @@
+name: Build and Deploy Jekyll
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build -d _site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  notify-discord:
+    runs-on: ubuntu-latest
+    needs: build-deploy
+    if: always()   # 실패해도 실행 (성공/실패 모두 알림)
+    steps:
+      - name: Send Discord Notification
+        run: |
+          STATUS="✅ 빌드 및 배포 성공"
+          COLOR=3066993
+          if [ "${{ needs.build-deploy.result }}" != "success" ]; then
+            STATUS="❌ 빌드 실패 또는 오류 발생"
+            COLOR=15158332
+          fi
+
+          RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          COMMIT_SHA="${{ github.sha }}"
+          SHORT_SHA="${COMMIT_SHA:0:7}"
+          AUTHOR="${{ github.actor }}"
+          BRANCH="${{ github.ref_name }}"
+          REPO="${{ github.repository }}"
+          TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+
+          read -r -d '' PAYLOAD <<EOF
+          {
+            "username": "Co-Study CI",
+            "embeds": [{
+              "title": "${STATUS}",
+              "url": "${RUN_URL}",
+              "color": ${COLOR},
+              "timestamp": "${TIMESTAMP}",
+              "fields": [
+                {"name": "Repo", "value": "\`${REPO}\`", "inline": true},
+                {"name": "Branch", "value": "\`${BRANCH}\`", "inline": true},
+                {"name": "Commit", "value": "\`${SHORT_SHA}\`", "inline": true},
+                {"name": "Author", "value": "${AUTHOR}", "inline": true}
+              ]
+            }]
+          }
+          EOF
+
+          curl -sS -H "Content-Type: application/json" \
+            -d "$PAYLOAD" \
+            "${{ secrets.DISCORD_WEBHOOK_URL }}"
