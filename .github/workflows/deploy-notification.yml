@@ -28,10 +28,10 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
-          bundle install
+          bundle install --jobs 4 --retry 3
 
       - name: Build with Jekyll
-        run: bundle exec jekyll build -d _site
+        run: bundle exec jekyll build -s docs -d _site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
