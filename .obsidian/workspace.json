@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/format/template-study.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "template-study"
+              "title": "README"
             }
           }
         ]
@@ -180,10 +180,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1e82da4b1c1feec7",
+  "active": "515744a2c744ca82",
   "lastOpenFiles": [
-    "docs/2025/11/03/example.md",
     "docs/format/template-study.md",
+    "docs/2025/11/03/example.md",
     "README.md",
     "docs/index.md",
     "Gemfile",
