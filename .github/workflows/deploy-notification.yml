@@ -71,24 +71,22 @@ jobs:
           REPO="${{ github.repository }}"
           TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
-          read -r -d '' PAYLOAD <<EOF
-          {
+          PAYLOAD=$(printf '{
             "username": "Co-Study CI",
             "embeds": [{
-              "title": "${STATUS}",
-              "url": "${RUN_URL}",
-              "color": ${COLOR},
-              "timestamp": "${TIMESTAMP}",
+              "title": "%s",
+              "url": "%s",
+              "color": %s,
+              "timestamp": "%s",
               "fields": [
-                {"name": "Repo", "value": "\`${REPO}\`", "inline": true},
-                {"name": "Branch", "value": "\`${BRANCH}\`", "inline": true},
-                {"name": "Commit", "value": "\`${SHORT_SHA}\`", "inline": true},
-                {"name": "Author", "value": "${AUTHOR}", "inline": true}
+                {"name":"Repo","value":"`'"'"'%s`'"'"'","inline":true},
+                {"name":"Branch","value":"`'"'"'%s`'"'"'","inline":true},
+                {"name":"Commit","value":"`'"'"'%s`'"'"'","inline":true},
+                {"name":"Author","value":"%s","inline":true}
               ]
             }]
-          }
-          EOF
+          }' "$STATUS" "$RUN_URL" "$COLOR" "$TIMESTAMP" "$REPO" "$BRANCH" "$SHORT_SHA" "$AUTHOR")
 
-          curl -sS -H "Content-Type: application/json" \
+          curl -v -H "Content-Type: application/json" \
             -d "$PAYLOAD" \
             "${{ secrets.DISCORD_WEBHOOK_URL }}"
