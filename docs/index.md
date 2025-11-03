@@ -9,7 +9,7 @@
 
 ### ▶️ 2025년도
 
-- [예시 양식](template-study.md)
+- [예시 양식](format/template-study.md)
 
 ---
 
