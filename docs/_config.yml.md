@@ -1,6 +1,6 @@
-theme: jekyll-theme-cayman
-title: "Study Blog"
-description: "기술/스터디 기록용 블로그"
+theme: jekyll-theme-minimal
+title: "Study Archive"
+description: "개인별 스터디 기록을 공유하고 함께 성장하는 공간"
 lsi: false
 safe: true
 source: [your repo's top level directory]
@@ -11,3 +11,10 @@ gist:
 kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
+show_downloads: false
+markdown: kramdown
+encoding: UTF-8
+timezone: Asia/Seoul
+github:
+  is_project_page: false
+  is_user_page: false
