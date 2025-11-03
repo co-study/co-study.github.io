@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/index.md.md",
+                "file": "README.md.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index.md"
+              "title": "README.md"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/index.md.md",
+                "file": "README.md.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "index.md 의 백링크"
+              "title": "README.md 의 백링크"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/index.md.md",
+                "file": "README.md.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "index.md 의 나가는 링크"
+              "title": "README.md 의 나가는 링크"
             }
           },
           {
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/index.md.md",
+                "file": "README.md.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "index.md 의 개요"
+              "title": "README.md 의 개요"
             }
           },
           {
@@ -180,11 +180,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0d80f53d6f66b2db",
+  "active": "1e46cb194ba358d7",
   "lastOpenFiles": [
-    "docs/_config.yml.md",
     "docs/index.md.md",
-    "README.md",
+    "docs/_config.yml.md",
+    "README.md.md",
     "docs",
     "docs/2025/11/03/example.md.md",
     "docs/2025/11/03",
