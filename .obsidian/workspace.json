@@ -11,10 +11,14 @@
             "id": "c9bdf425507c7933",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "docs/format/template-study.md.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "template-study.md"
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "docs/format/template-study.md.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "백링크"
+              "title": "template-study.md 의 백링크"
             }
           },
           {
@@ -108,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "docs/format/template-study.md.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "나가는 링크"
+              "title": "template-study.md 의 나가는 링크"
             }
           },
           {
@@ -136,12 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "docs/format/template-study.md.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "개요"
+              "title": "template-study.md 의 개요"
             }
           },
           {
@@ -173,19 +180,19 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c9bdf425507c7933",
+  "active": "0d80f53d6f66b2db",
   "lastOpenFiles": [
+    "무제.md",
     "docs/format/template-study.md.md",
+    "docs/_config.yml.md",
     "docs/index.md.md",
     "docs/format",
     "2025/nestjs-di-study.md",
     "2025",
-    "docs/_config.yml.md",
     "README.md.md",
     "docs",
     "docs/2025/11/03",
     "docs/2025/11",
-    "무제.md",
     "docs/2025"
   ]
 }

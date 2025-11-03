@@ -3,7 +3,6 @@ title: "Study Archive"
 description: "개인별 스터디 기록을 공유하고 함께 성장하는 공간"
 lsi: false
 safe: true
-source: [your repo's top level directory]
 incremental: false
 highlighter: rouge
 gist:
