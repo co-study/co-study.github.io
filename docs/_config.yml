@@ -18,4 +18,11 @@ github:
   is_user_page: false
 plugins:
   - jekyll-remote-theme
+  - jekyll-github-metadata
+  - jekyll-titles-from-headings
+title_from_headings:
+  enabled: true
+  strip_title: false
+  collections: false
+
 remote_theme: just-the-docs/just-the-docs
