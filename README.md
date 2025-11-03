@@ -12,6 +12,8 @@
 6. 설치된 후 `활성화` 버튼으로 Git 플러그인을 활성화합니다.
 7. 이제 docs 디렉토리 아래에 자신이 진행한 스터디를 "연/월/일/파일명.md"로 작성해서 아래 이미지와 같이 "commit and sync"를 클릭하면 작성한 내용이 배포됩니다.
   <img width="1543" height="1207" alt="image" src="https://github.com/user-attachments/assets/d6df8602-4815-4ded-af9c-3163d706ab00" />
+
 ---
+
 ### Ref.
 - [옵시디언 깃헙 연동](https://jinsiri.tistory.com/621)
