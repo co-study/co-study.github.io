@@ -1,9 +1,13 @@
 ---
 layout: post
+# 또는
+# published: false
+# 또는
+nav_exclude: true
 title: "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_"
 date: 2025-11-03
 author: "@yourname"
-category: Backend  # Backend, Frontend, DevOps, Algorithm, 기타 중 선택
+category: etc # Backend, Frontend, DevOps, Algorithm, 기타 중 선택
 tags:
   - NestJS
   - TypeScript

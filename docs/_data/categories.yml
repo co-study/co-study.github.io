@@ -1,22 +1,14 @@
 # 카테고리 목록 및 설정
 categories:
-  - name: 00-notice
-    slug: notice
-    description: "공지사항"
-    icon: "🔔"
-  - name: 01-metadata-guide
-    slug: metadata-guide
-    description: "메타데이터 가이드"
-    icon: "📝"
-  - name: 99-etc
-    slug: etc
-    description: "기타"
-    icon: "📄"
-  - name: anna
-    slug: anna
-    description: "안나님"
-    icon: "👧"
   - name: kimson
     slug: kimson
     description: "경남"
     icon: "👨"
+  - name: anna
+    slug: anna
+    description: "안나님"
+    icon: "👧"
+  - name: etc
+    slug: etc
+    description: "기타"
+    icon: "📄"

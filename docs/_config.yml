@@ -16,6 +16,8 @@ timezone: Asia/Seoul
 github:
   is_project_page: false
   is_user_page: false
+  # 로컬 개발 시 GitHub Metadata 경고를 줄이기 위한 설정
+  repository: "co-study/co-study.github.io"
 plugins:
   - jekyll-remote-theme
   - jekyll-github-metadata
@@ -26,7 +28,9 @@ title_from_headings:
   strip_title: false
   collections: false
 
+# Remote theme 설정
 remote_theme: just-the-docs/just-the-docs
+remote_theme_branch: main
 
 # just-the-docs 테마 navigation 설정
 # nav_external_links:
