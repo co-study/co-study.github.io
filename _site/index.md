@@ -15,10 +15,10 @@
 
 ## ✏️ 스터디 작성 가이드
 
-새로운 스터디를 추가하려면 `/docs/_posts/` 폴더 안에  
+새로운 스터디를 추가하려면 `/docs/<사용자명>/연/월/일` 폴더 안에  
 다음 양식을 복사해 새로운 `.md` 파일로 작성하면 됩니다 👇
 
-- 파일명 형식: `YYYY-MM-DD-title.md` (예: `2025-11-03-nestjs-di-study.md`)
+- 파일명 형식: `title.md` (예: `nestjs-di-study.md`)
 - 포맷: [공통 스터디 템플릿](format/template-study.md)
 
 > 💡 파일명에 날짜를 포함하면 Jekyll이 자동으로 날짜를 인식합니다.  

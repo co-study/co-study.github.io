@@ -12,9 +12,6 @@ tags:
   - NestJS
   - TypeScript
   # 추가 태그...
-# related_posts:  # 선택사항: 관련 포스트 링크
-#   - title: "관련 포스트 제목"
-#     url: "/2025/11/03/related-post"
 ---
 
 # 🧠 스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_
