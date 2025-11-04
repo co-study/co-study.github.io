@@ -1,0 +1,23 @@
+# 카테고리 목록 및 설정
+categories:
+  - name: Backend
+    slug: backend
+    description: "백엔드 개발 관련 스터디"
+    icon: "⚙️"
+  - name: Frontend
+    slug: frontend
+    description: "프론트엔드 개발 관련 스터디"
+    icon: "🎨"
+  - name: DevOps
+    slug: devops
+    description: "DevOps 및 인프라 관련 스터디"
+    icon: "🚀"
+  - name: Algorithm
+    slug: algorithm
+    description: "알고리즘 및 자료구조 스터디"
+    icon: "🧮"
+  - name: 기타
+    slug: etc
+    description: "기타 스터디"
+    icon: "📚"
+
