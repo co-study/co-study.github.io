@@ -29,19 +29,19 @@ title_from_headings:
 remote_theme: just-the-docs/just-the-docs
 
 # just-the-docs 테마 navigation 설정
-nav_external_links:
-  - title: 카테고리
-    url: /category/
-  - title: Backend
-    url: /category/backend/
-  - title: Frontend
-    url: /category/frontend/
-  - title: DevOps
-    url: /category/devops/
-  - title: Algorithm
-    url: /category/algorithm/
-  - title: 기타
-    url: /category/etc/
+# nav_external_links:
+#   - title: 카테고리
+#     url: /category/
+#   - title: Backend
+#     url: /category/backend/
+#   - title: Frontend
+#     url: /category/frontend/
+#   - title: DevOps
+#     url: /category/devops/
+#   - title: Algorithm
+#     url: /category/algorithm/
+#   - title: 기타
+#     url: /category/etc/
 
 # 포스트 기본 설정
 defaults:
