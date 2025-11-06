@@ -1,133 +1,175 @@
 {"0": {
-    "doc": "NestJS 의존성 주입 원리 이해하기",
-    "title": "🧠 NestJS 의존성 주입 원리 이해하기 (예시)",
-    "content": ". ",
-    "url": "/docs/kimson/2025/11/03/example/#-nestjs-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%A3%BC%EC%9E%85-%EC%9B%90%EB%A6%AC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%98%88%EC%8B%9C",
+    "doc": "서비스 운영에 필요한 서버 스펙 정의",
+    "title": "서비스 운영에 필요한 서버 스펙 정의",
+    "content": " ",
+    "url": "/docs/kimson/2025/11/06/calculate-traffic/",
     
-    "relUrl": "/docs/kimson/2025/11/03/example/#-nestjs-의존성-주입-원리-이해하기-예시"
+    "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/"
   },"1": {
-    "doc": "NestJS 의존성 주입 원리 이해하기",
+    "doc": "서비스 운영에 필요한 서버 스펙 정의",
+    "title": "서비스 수준 (Service Level)",
+    "content": "서비스 수준에는 크게 세가지 용어로 설명한다. | 서비스 수준 목표(ServiceLevel Objectives, SLO): 시스템에서 기대되는 가용성을 설정한 목표. | 서비스 수준 지표(Service Level Indicators, SLI): 시스템의 가용성을 파악하기 위한 핵심 측정치와 지표. | 서비스 수준 계약(Service-Level agreements, SLA): 시스템이 SLO를 충족하지 못할 경우 발생하는 상황과 합의된 내용을 설명하는 법적 계약. | . 트래픽 산정을 다루기 위해 SLO 개념을 주로 다룹니다. 서비스 수준의 종류에 대한 비교와 상세 설명은 여기를 참조해주세요. ",
+    "url": "/docs/kimson/2025/11/06/calculate-traffic/#%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%88%98%EC%A4%80-service-level",
+    
+    "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#서비스-수준-service-level"
+  },"2": {
+    "doc": "서비스 운영에 필요한 서버 스펙 정의",
+    "title": "스펙 산정의 과정",
+    "content": ". | SLO 정의(성능 목표) . | 가용성: 예) 99.9% | . | 수요 모델링(Workload) . | 사용자 규모: DAU/WAU/MAU, 피크배율(평균 대비 최대 트래픽 배수) | 사용 패턴: 세션 길이, 페이지/분, API 호출/페이지, Think time | 트래픽 조합: GET/POST 비율, 실시간 여부, 배치 작업 유무 | . | 리소스 모델링(자원/비용) . | CPU, 메모리, 네트워크(대역폭/egress), 디스크(용량/IOPS/Throughput), DB/캐시 | 한 요청당 자원 사용량(서비스 시간, 쿼리 수, 바이트) | . | 검증(Load Test/관측) | 가설 수치로 부하 테스트 → 관측치로 모델 보정 → 여유분(헤드룸) 확정 | . 모델을 먼저 만들고, 실측으로 보정하는 편이 추정만 하는 것보다 좋다고 한다. ",
+    "url": "/docs/kimson/2025/11/06/calculate-traffic/#%EC%8A%A4%ED%8E%99-%EC%82%B0%EC%A0%95%EC%9D%98-%EA%B3%BC%EC%A0%95",
+    
+    "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#스펙-산정의-과정"
+  },"3": {
+    "doc": "서비스 운영에 필요한 서버 스펙 정의",
+    "title": "핵심 공식",
+    "content": ". | QPS/RPS(초당 요청 수) RPS = 동시활성 사용자 x 사용자당 RPS 사용자당 RPS = (페이지/분 x 페이지당 API콜 수) / 60 | 대역폭(Throughput) 초당 전송량(바이트/초) = RPS x 평균응답크기(바이트) 원본 서버 기준 트래픽 = 전체 트래픽 x (1 - 캐시적중률) | Little’s Law 동시요청수 L = λ(도착률 RPS) × W(평균 응답시간) 예) RPS=200, 평균=0.2초 → L=40개 동시 처리 필요 | CPU 활용도(단일 코어 근사) U = λ × S (S=평균 서비스시간/요청의 CPU점유 시간) 목표 활용도(ρ)를 0.6~0.7로 제한 → 필요 코어수 ≈ (λ × S) / ρ | DB IOPS DB RPS = App RPS x 요청당 쿼리수 x (1 - 캐시히트) 스토리지 IOPS/Throughput은 엔진, 인덱스, 트랜잭션 크기에 따라 상이 → 부하테스트로 보정 | 저장소 용량(로그/이벤트) 일간 데이터량 = 이벤트 수/일 x 평균 바이트 필요 용량 = 일간 x 보관일수 x (1 + 압축여유) | . ",
+    "url": "/docs/kimson/2025/11/06/calculate-traffic/#%ED%95%B5%EC%8B%AC-%EA%B3%B5%EC%8B%9D",
+    
+    "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#핵심-공식"
+  },"4": {
+    "doc": "서비스 운영에 필요한 서버 스펙 정의",
+    "title": "계산 예시와 설명",
+    "content": "문제를 가정하고 더 쉬운 풀이로 계산해나간다. | 동시에 쓰는 사람 수(피크 동시 사용자) . | 어디서: 구글 애널리틱스 동시 접속, 서버 로그(시간대별 요청), 없다면 합리적 추정(=평균의 3~10배) | 뜻: 가장 바쁠 때 한순간에 놀러 오는 사용자 수 | . | 한 사람이 1분에 몇 화면 보나(페이지/분) . | 뜻: 사용자이 1분에 몇개의 컨텐츠를 보는지 | 어디서: 프론트 로그/GA4, 없으면 1~3으로 가정 | . | 화면 하나에 API를 몇 번 요청하는지(API/화면) . | 뜻: 컨텐츠 하나 볼 때 서버로 몇 번 요청하는지 | 어디서: 네트워크 탭/백엔드 라우트 카운트(대개 1~5) | . | 응답 크기(바이트) . | 뜻: 서버에서 응답하는 데이터 크기 | 어디서: 서버 로그 response size 평균 (예: 10~50KB) | . | 목표 속도(응답시간) . | 뜻: 사용자 한 명을 평균 몇 초 만에 처리할지 (예: 평균 0.2초) | 어디서: APM/로그, 없으면 목표로 정함 (예: 0.1 ~ 0.3초) | . | 캐시 유무(적중률) . | 뜻: 자주 요청하는 건 미리 준비해서 바로 제공(정적/GET 캐시 적중률) | 어디서: CDN/프록시 통계(없으면 0~60% 가정) | . | 요청 하나에 DB를 몇 번 쿼리 요청하는지(쿼리/요청) (QPS) . | 뜻: 서버가 DB에 몇 번 조회 하는가 | 어디서: 쿼리 로깅/ORM 미들웨어 (예: 대개 1~5) | . | . 예시 계산 . 핵심 공식 일부를 사용해 모의로 트래픽을 계산한다. | 초당 요청 수(RPS): 동시 사용자 x 한 사람의 초당 요청 수 . | 한 사람 초당 요청 수: (페이지/분 x API/페이지) / 60 | 예) 페이지/분 2, API/페이지 2 → 4/60 = 0.0667 | 동시 50명 → RPS = 50 x 0.0667 = 약 3.33RPS | 즉, 초당 3.33개의 요청이 발생 | . | 동시 처리 요청 수: RPS x 평균 응답 시간(초) . | 예) 3.33 x 0.2초 = 0.666 (= 대략 0.67개) | 뜻: 서버가 동시에 붙잡고 있는 사용자 수 | . | 초당 데이터 양(대역폭): RPS x 평균 응답 크기 . | 예) 3.33 x 15KB = 약 50KB/s (= 약 0.4Mb/s) | . | 초당 DB 일(쿼리 수): RPS x (쿼리/요청) x (1 - 캐시 히트) . | 예) 쿼리/요청 2, 캐시 없음 → 3.33 x 2 = 6.66QPS | . | . 여기까지 계산하면 “얼마나 바쁜지” 눈에 보인다. 초당 3.33명이 사용하고, 동시에 1명을 처리중이며, 초당 50KB데이터가 응답되며, DB는 초당 6~7번 일한다. 서버 스펙 산정 . 서버(계산대), DB(창고 직원), 캐시/CDN(진열대)으로 나눈다. | 애플리케이션 서버(계산대) . | vCPU(계산대 수): 대략 동시요청 수 x 2배면 초보자 사용에 충분 이유는 스파이크, GC 등 버퍼가 필요하기 때문 . | 예) 동시 요청 = 약 1 → 2 vCPU 추천(최소 2개 = N + 1) | . | 메모리: 앱 기본 메모리 + (동시요청 x 요청당 임시 메모리 5~20MB) + 여유 30% . | 예) 기본 300MB + (1 x 10MB) → 1~2GB면 충분 | . | 네트워크: 대역폭 계산값 x 1.5 ~ 2배 . | 예) 50KB/s x 2 = 100KB/s 여유(클라우드 기본으로 충분) | . | . | 데이터베이스(창고 직원) . | QPS 보고 작은 사양으로 시작 + 인덱스/쿼리 튜닝 . | 예) 6~7 QPS명 소형 인스턴스도 무난 | . | 중요: 느린 쿼리를 해결하면 서버 스펙보다 효과 큼 | . | 캐시/CDN(진열대) . | GET 결과 30~120초 캐시만 해도 RPS/DB부하 크게 감소 | 이미지/정적 리소스는 CDN 기본 | . | . 실무에서 산정에 필요한 데이터 모으는 팁 . | 프론트/게이트웨이 로그: 라우트별 호출 수와 응답 크기 평균 | 하루 중 가장 바쁜 시간 30분 뽑기 → 피크 동시 사용자 근사값 추출 | 네트워크 탭 한 화면당 호출 개수 (대략치 판별) | APM/로그로 평균 응답 시간 확인(목표치 없으면 0.2초로 산정) | ORM/DB 로그로 요청당 쿼리 수 평균 산정 | . ",
+    "url": "/docs/kimson/2025/11/06/calculate-traffic/#%EA%B3%84%EC%82%B0-%EC%98%88%EC%8B%9C%EC%99%80-%EC%84%A4%EB%AA%85",
+    
+    "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#계산-예시와-설명"
+  },"5": {
+    "doc": "서비스 운영에 필요한 서버 스펙 정의",
+    "title": "모의 계산",
+    "content": "다음은 계산에 필요한 데이터 조건. | 동시 사용자: 50명 | 페이지/분 2, API/페이지 2 → 4/60 = 0.0667 | 평균 응답 0.2초, 평균 크기 15KB, QPS(쿼리/요청) 2 | . 계산 . | RPS = 50 x 0.0667 = 약 3.33(request/sec) | 동시요청 = 3.33 x 0.2 = 0.666 = 약 1 | 대역폭 = 3.33 x 15KB = 약 50KB/s | DB QPS = 3.33 x 2 = 6.66(query/sec) | . 스펙 제안 . | APP: 2 vCPU / 2GB x 2대 시작 | DB: 소형 + 모니터링 (느린 쿼리 튜닝) | CDN/캐시: 정적 필수, 목록/상세 GET 30~120초 캐시 | . ✅ 레퍼런스 . | 예상 트래픽 산정 | CPU vs vCPU | . 📅 작성일: 2025-11-06 03:18:24 ✍️ 작성자: 김경남 . ",
+    "url": "/docs/kimson/2025/11/06/calculate-traffic/#%EB%AA%A8%EC%9D%98-%EA%B3%84%EC%82%B0",
+    
+    "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#모의-계산"
+  },"6": {
+    "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
+    "title": "🧠 (예시) NestJS 의존성 주입 원리 이해하기",
+    "content": ". ",
+    "url": "/docs/kimson/2025/11/03/example/#-%EC%98%88%EC%8B%9C-nestjs-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%A3%BC%EC%9E%85-%EC%9B%90%EB%A6%AC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0",
+    
+    "relUrl": "/docs/kimson/2025/11/03/example/#-예시-nestjs-의존성-주입-원리-이해하기"
+  },"7": {
+    "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "1️⃣ 어떤 주제로 공부했나요?",
     "content": "최근 NestJS로 프로젝트를 진행하면서 DI(Dependency Injection) 컨테이너 구조가 헷갈려서 의존성 주입의 원리와 실제 동작 방식을 정리해보았습니다. | NestJS의 DI가 어떻게 동작하는지 궁금했음 | Angular 기반 구조와의 유사점, 차이점이 있는지 확인하고 싶었음 | . ",
     "url": "/docs/kimson/2025/11/03/example/#1%EF%B8%8F%E2%83%A3-%EC%96%B4%EB%96%A4-%EC%A3%BC%EC%A0%9C%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%82%98%EC%9A%94",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#1️⃣-어떤-주제로-공부했나요"
-  },"2": {
-    "doc": "NestJS 의존성 주입 원리 이해하기",
+  },"8": {
+    "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "2️⃣ 스터디 과정 (어떤 방식으로 공부했는가)",
     "content": ". | NestJS 공식문서 및 DI 관련 챕터 정독 NestJS Dependency Injection 공식문서 | 인프런 NestJS 강의 참고 | 팀원과 DI가 필요한 실제 사례를 들어 설계 토의 | 예시 실습: @Injectable()과 ModuleRef를 이용해 커스텀 Provider 작성 | . ",
     "url": "/docs/kimson/2025/11/03/example/#2%EF%B8%8F%E2%83%A3-%EC%8A%A4%ED%84%B0%EB%94%94-%EA%B3%BC%EC%A0%95-%EC%96%B4%EB%96%A4-%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%8A%94%EA%B0%80",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#2️⃣-스터디-과정-어떤-방식으로-공부했는가"
-  },"3": {
-    "doc": "NestJS 의존성 주입 원리 이해하기",
+  },"9": {
+    "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "3️⃣ 알게 된 점",
     "content": ". | NestJS의 DI는 Angular에서 발전된 구조 사용 | 의존성 주입이 클래스 생성자 레벨에서 TypeScript의 타입 정보와 Reflect Metadata 기반으로 동작 | Provider 등록 시 Lazy Loading, Scope 변환 등 다양한 옵션 제공 | 복잡한 의존 관계를 효율적으로 관리할 수 있음 | . ",
     "url": "/docs/kimson/2025/11/03/example/#3%EF%B8%8F%E2%83%A3-%EC%95%8C%EA%B2%8C-%EB%90%9C-%EC%A0%90",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#3️⃣-알게-된-점"
-  },"4": {
-    "doc": "NestJS 의존성 주입 원리 이해하기",
+  },"10": {
+    "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "4️⃣ 더 궁금한 점",
     "content": ". | Request 스코프 Provider의 주입 타이밍 및 라이프사이클 관리 | 커스텀 Provider 작성 시 내부적으로 어떤 Hook이 동작하는지 | DI 에러가 발생했을 때 디버깅 노하우 | . ",
     "url": "/docs/kimson/2025/11/03/example/#4%EF%B8%8F%E2%83%A3-%EB%8D%94-%EA%B6%81%EA%B8%88%ED%95%9C-%EC%A0%90",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#4️⃣-더-궁금한-점"
-  },"5": {
-    "doc": "NestJS 의존성 주입 원리 이해하기",
+  },"11": {
+    "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "5️⃣ 결과적으로 느낀 점",
     "content": ". | DI를 제대로 이해하니 모듈화와 유지보수성이 높은 구조를 설계할 수 있을 것 같음 | NestJS의 내부 동작을 이해하는 데 도움이 되었음 | 다음 스터디에선 AOP 개념과 Interceptor를 연계해보고자 함 | . 📅 작성일: 2025-11-03 ✍️ 작성자: GPT5 . ",
     "url": "/docs/kimson/2025/11/03/example/#5%EF%B8%8F%E2%83%A3-%EA%B2%B0%EA%B3%BC%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%8A%90%EB%82%80-%EC%A0%90",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#5️⃣-결과적으로-느낀-점"
-  },"6": {
-    "doc": "NestJS 의존성 주입 원리 이해하기",
-    "title": "NestJS 의존성 주입 원리 이해하기",
+  },"12": {
+    "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
+    "title": "(예시) NestJS 의존성 주입 원리 이해하기",
     "content": " ",
     "url": "/docs/kimson/2025/11/03/example/",
     
     "relUrl": "/docs/kimson/2025/11/03/example/"
-  },"7": {
+  },"13": {
     "doc": "안나 스터디",
     "title": "안나 스터디",
     "content": "테스트 . ",
     "url": "/docs/anna/",
     
     "relUrl": "/docs/anna/"
-  },"8": {
+  },"14": {
     "doc": "경남 스터디",
     "title": "경남 스터디",
     "content": "테스트 . ",
     "url": "/docs/kimson/",
     
     "relUrl": "/docs/kimson/"
-  },"9": {
+  },"15": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "🧠 스터디 주제: (예: NestJS 의존성 주입 원리 이해하기)",
     "content": ". ",
-    "url": "/format/template-study/#-%EC%8A%A4%ED%84%B0%EB%94%94-%EC%A3%BC%EC%A0%9C-%EC%98%88-nestjs-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%A3%BC%EC%9E%85-%EC%9B%90%EB%A6%AC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0",
+    "url": "/template/template-study/#-%EC%8A%A4%ED%84%B0%EB%94%94-%EC%A3%BC%EC%A0%9C-%EC%98%88-nestjs-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%A3%BC%EC%9E%85-%EC%9B%90%EB%A6%AC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0",
     
-    "relUrl": "/format/template-study/#-스터디-주제-예-nestjs-의존성-주입-원리-이해하기"
-  },"10": {
+    "relUrl": "/template/template-study/#-스터디-주제-예-nestjs-의존성-주입-원리-이해하기"
+  },"16": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "1️⃣ 어떤 주제로 공부했나요?",
     "content": ". | 주제 배경, 선택 이유 | 관련된 기술 스택 혹은 문제 상황 | . 예시: . 최근 NestJS로 프로젝트를 진행하면서 DI 컨테이너 구조가 헷갈려서 원리를 정리해봤어요. ",
-    "url": "/format/template-study/#1%EF%B8%8F%E2%83%A3-%EC%96%B4%EB%96%A4-%EC%A3%BC%EC%A0%9C%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%82%98%EC%9A%94",
+    "url": "/template/template-study/#1%EF%B8%8F%E2%83%A3-%EC%96%B4%EB%96%A4-%EC%A3%BC%EC%A0%9C%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%82%98%EC%9A%94",
     
-    "relUrl": "/format/template-study/#1️⃣-어떤-주제로-공부했나요"
-  },"11": {
+    "relUrl": "/template/template-study/#1️⃣-어떤-주제로-공부했나요"
+  },"17": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "2️⃣ 스터디 과정 (어떤 방식으로 공부했는가)",
     "content": ". | 문서, 영상, 공식 문서 링크 등 참고 자료 | 실습 코드나 실험 과정 | 팀원과 토의한 내용 | . 예시: . 공식 문서와 NestJS 소스 코드를 분석하면서 @Injectable()과 ModuleRef 동작 방식을 비교했습니다. ",
-    "url": "/format/template-study/#2%EF%B8%8F%E2%83%A3-%EC%8A%A4%ED%84%B0%EB%94%94-%EA%B3%BC%EC%A0%95-%EC%96%B4%EB%96%A4-%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%8A%94%EA%B0%80",
+    "url": "/template/template-study/#2%EF%B8%8F%E2%83%A3-%EC%8A%A4%ED%84%B0%EB%94%94-%EA%B3%BC%EC%A0%95-%EC%96%B4%EB%96%A4-%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%8A%94%EA%B0%80",
     
-    "relUrl": "/format/template-study/#2️⃣-스터디-과정-어떤-방식으로-공부했는가"
-  },"12": {
+    "relUrl": "/template/template-study/#2️⃣-스터디-과정-어떤-방식으로-공부했는가"
+  },"18": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "3️⃣ 알게 된 점",
     "content": ". | 새롭게 이해한 개념, 깨달음 | 기존과 달랐던 점 | . 예시: . NestJS의 DI는 Angular에서 발전된 구조로, Provider 등록 시 Lazy Loading이 가능하다는 걸 알게 됐어요. ",
-    "url": "/format/template-study/#3%EF%B8%8F%E2%83%A3-%EC%95%8C%EA%B2%8C-%EB%90%9C-%EC%A0%90",
+    "url": "/template/template-study/#3%EF%B8%8F%E2%83%A3-%EC%95%8C%EA%B2%8C-%EB%90%9C-%EC%A0%90",
     
-    "relUrl": "/format/template-study/#3️⃣-알게-된-점"
-  },"13": {
+    "relUrl": "/template/template-study/#3️⃣-알게-된-점"
+  },"19": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "4️⃣ 더 궁금한 점",
     "content": ". | 추가로 파고들고 싶은 개념 | 아직 명확하지 않은 부분 | . 예시: . 스코프가 Request일 때 Provider 주입 타이밍이 어떻게 관리되는지 더 알고 싶어요. ",
-    "url": "/format/template-study/#4%EF%B8%8F%E2%83%A3-%EB%8D%94-%EA%B6%81%EA%B8%88%ED%95%9C-%EC%A0%90",
+    "url": "/template/template-study/#4%EF%B8%8F%E2%83%A3-%EB%8D%94-%EA%B6%81%EA%B8%88%ED%95%9C-%EC%A0%90",
     
-    "relUrl": "/format/template-study/#4️⃣-더-궁금한-점"
-  },"14": {
+    "relUrl": "/template/template-study/#4️⃣-더-궁금한-점"
+  },"20": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "5️⃣ 결과적으로 느낀 점",
     "content": ". | 이번 스터디로 얻은 인사이트나 감정 | 다음 스터디 계획 | . 예시: . 단순히 “DI가 된다”가 아니라 내부 구조를 이해하니 아키텍처 설계에 자신감이 생겼어요. 다음엔 AOP 개념과 Interceptor를 이어서 공부해보려 합니다. 📅 작성일: 2025-11-03 ✍️ 작성자: @yourname . ",
-    "url": "/format/template-study/#5%EF%B8%8F%E2%83%A3-%EA%B2%B0%EA%B3%BC%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%8A%90%EB%82%80-%EC%A0%90",
+    "url": "/template/template-study/#5%EF%B8%8F%E2%83%A3-%EA%B2%B0%EA%B3%BC%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%8A%90%EB%82%80-%EC%A0%90",
     
-    "relUrl": "/format/template-study/#5️⃣-결과적으로-느낀-점"
-  },"15": {
+    "relUrl": "/template/template-study/#5️⃣-결과적으로-느낀-점"
+  },"21": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "content": " ",
-    "url": "/format/template-study/",
+    "url": "/template/template-study/",
     
-    "relUrl": "/format/template-study/"
-  },"16": {
+    "relUrl": "/template/template-study/"
+  },"22": {
     "doc": "테스트 포스트",
     "title": "테스트 포스트",
     "content": "☘️ 우왕 . ",
     "url": "/docs/anna/2025/11/03/test/",
     
     "relUrl": "/docs/anna/2025/11/03/test/"
-  },"17": {
+  },"23": {
     "doc": "🚀 로컬 개발 환경 설정 가이드",
     "title": "🚀 로컬 개발 환경 설정 가이드",
     "content": "# 🚀 로컬 개발 환경 설정 가이드 ## 필수 사항 로컬에서 Jekyll을 실행할 때 GitHub Pages와 동일하게 작동하려면 다음 명령어를 사용해야 합니다. ## 설치 ```bash # 1. Ruby 설치 확인 ruby --version # 2. Bundler 설치 (없는 경우) gem install bundler # 3. 의존성 설치 bundle install ``` ## 실행 방법 ### 올바른 실행 방법 (GitHub Pages와 동일) ```bash # 프로젝트 루트에서 실행 bundle exec jekyll serve --source docs --destination _site ``` 또는 더 간단하게: ```bash cd docs bundle exec jekyll serve ``` ### 서버 시작 후 브라우저에서 `http://localhost:4000` 또는 `http://127.0.0.1:4000`으로 접속하세요. ## 문제 해결 ### Remote Theme가 적용되지 않는 경우 1. **플러그인 확인** - `_config.yml`에 `jekyll-remote-theme`이 `plugins` 목록에 있는지 확인 - `bundle list | grep remote` 명령어로 플러그인 설치 확인 2. **네트워크 연결 확인** - Remote theme는 GitHub에서 테마를 다운로드해야 하므로 인터넷 연결이 필요합니다 - 방화벽이나 프록시 설정이 GitHub API 접근을 막고 있는지 확인 3. **캐시 삭제** ```bash rm -rf .jekyll-cache rm -rf _site bundle exec jekyll clean bundle exec jekyll serve --source docs ``` 4. **플러그인 재설치** ```bash bundle update jekyll-remote-theme bundle exec jekyll serve --source docs ``` ## 빌드 명령어 (GitHub Actions와 동일) ```bash bundle exec jekyll build -s docs -d _site ``` ## 추가 팁 - `--incremental` 옵션을 사용하면 변경된 파일만 재빌드하여 더 빠릅니다: ```bash bundle exec jekyll serve --source docs --incremental ``` - `--livereload` 옵션을 사용하면 파일 변경 시 자동으로 브라우저가 새로고침됩니다: ```bash bundle exec jekyll serve --source docs --livereload ``` ",
     "url": "/LOCAL_SETUP/",
     
     "relUrl": "/LOCAL_SETUP/"
-  },"18": {
+  },"24": {
     "doc": "🌱 Study Archive",
     "title": "🌱 Study Archive",
-    "content": "# 🌱 Study Archive > **공부는 나 혼자 하는 게 아니라, 서로의 생각을 엮는 과정이다.** > 이 공간은 각자 배운 것을 Markdown으로 기록하고, 서로의 관점을 공유하는 스터디 블로그입니다. --- ## 📚 스터디 목록 ### ▶️ 2025년도 - [예시 양식](/format/template-study/) --- ## ✏️ 스터디 작성 가이드 새로운 스터디를 추가하려면 `/docs//연/월/일` 폴더 안에 다음 양식을 복사해 새로운 `.md` 파일로 작성하면 됩니다 👇 - 파일명 형식: `title.md` (예: `nestjs-di-study.md`) - 포맷: [공통 스터디 템플릿](/format/template-study/) > 💡 파일명에 날짜를 포함하면 Jekyll이 자동으로 날짜를 인식합니다. > 💡 카테고리별 메뉴에서 자동으로 분류되어 표시됩니다. ",
+    "content": "# 🌱 Study Archive > **공부는 나 혼자 하는 게 아니라, 서로의 생각을 엮는 과정이다.** > 이 공간은 각자 배운 것을 Markdown으로 기록하고, 서로의 관점을 공유하는 스터디 블로그입니다. --- ## 📚 스터디 목록 ### ▶️ 2025년도 - [예시 양식](template-study.md) --- ## ✏️ 스터디 작성 가이드 새로운 스터디를 추가하려면 `/docs//연/월/일` 폴더 안에 다음 양식을 복사해 새로운 `.md` 파일로 작성하면 됩니다 👇 - 파일명 형식: `title.md` (예: `nestjs-di-study.md`) - 포맷: [공통 스터디 템플릿](template-study.md) > 💡 파일명에 날짜를 포함하면 Jekyll이 자동으로 날짜를 인식합니다. > 💡 카테고리별 메뉴에서 자동으로 분류되어 표시됩니다. ",
     "url": "/",
     
     "relUrl": "/"

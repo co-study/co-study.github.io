@@ -1,3 +1,8 @@
 [
-  "obsidian-git"
+  "obsidian-git",
+  "markdown-prettifier",
+  "obsidian-outliner",
+  "obsidian-smart-typography",
+  "obsidian-regex-replace",
+  "obsidian-timestamper"
 ]

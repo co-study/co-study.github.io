@@ -1,7 +1,9 @@
+url: "https://co-study.github.io"
+baseurl: "/"
 title: "Study Archive"
 description: "개인별 스터디 기록을 공유하고 함께 성장하는 공간"
 lsi: false
-safe: true
+safe: false
 incremental: false
 highlighter: rouge
 gist:
@@ -21,6 +23,7 @@ github:
   # 로컬 개발 시 GitHub Metadata 경고를 줄이기 위한 설정
   repository: "co-study/co-study.github.io"
 plugins:
+  - jekyll-target-blank
   - jekyll-remote-theme
   - jekyll-github-metadata
   - jekyll-titles-from-headings
@@ -69,7 +72,6 @@ enable_copy_code_button: true
 nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 color_scheme: dark
-
 
 nav_enabled: true
 heading_anchors: true

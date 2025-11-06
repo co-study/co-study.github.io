@@ -9,7 +9,7 @@
 
 ### ▶️ 2025년도
 
-- [예시 양식](format/template-study.md)
+- [예시 양식](template-study.md)
 
 ---
 
@@ -19,7 +19,7 @@
 다음 양식을 복사해 새로운 `.md` 파일로 작성하면 됩니다 👇
 
 - 파일명 형식: `title.md` (예: `nestjs-di-study.md`)
-- 포맷: [공통 스터디 템플릿](format/template-study.md)
+- 포맷: [공통 스터디 템플릿](template-study.md)
 
 > 💡 파일명에 날짜를 포함하면 Jekyll이 자동으로 날짜를 인식합니다.  
 > 💡 카테고리별 메뉴에서 자동으로 분류되어 표시됩니다.

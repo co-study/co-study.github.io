@@ -1,9 +1,9 @@
 ---
 layout: default
 parent: 경남 스터디
-title: "NestJS 의존성 주입 원리 이해하기"
+title: (예시) NestJS 의존성 주입 원리 이해하기
 date: 2025-11-03
-author: "GPT5"
+author: GPT5
 category: kimson
 tags:
   - NestJS
@@ -12,7 +12,7 @@ tags:
   - Backend
 ---
 
-# 🧠 NestJS 의존성 주입 원리 이해하기 (예시)
+# 🧠 (예시) NestJS 의존성 주입 원리 이해하기
 
 ---
 

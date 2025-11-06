@@ -1,0 +1,10 @@
+{
+  "findText": "{.:target=\"_blank\"}",
+  "replaceText": "{:target=\"_blank\"}",
+  "useRegEx": true,
+  "selOnly": false,
+  "caseInsensitive": true,
+  "processLineBreak": true,
+  "processTab": false,
+  "prefillFind": false
+}
