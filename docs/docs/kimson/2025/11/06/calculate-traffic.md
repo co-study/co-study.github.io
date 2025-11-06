@@ -165,6 +165,7 @@ tags:
 - [예상 트래픽 산정](https://bsssss.tistory.com/1522){:target="_blank"}
 - [CPU vs vCPU](https://miintto.github.io/docs/os-vcpu){:target="_blank"}
 - [SLA,SLA,SLI 비교](https://www.atlassian.com/ko/incident-management/kpis/sla-vs-slo-vs-sli){:target="_blank"}
+- [QPS, RPS 비교](https://salt-yoo.tistory.com/49){:target="blank"}
 
 ---
 
