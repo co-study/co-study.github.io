@@ -2,12 +2,12 @@
 layout: default
 parent: 경남 스터디
 title: 레디스 원자성 확보를 위한 분산락 처리
-date: 2025-11-03
+date: 2025-11-16
 author: 김경남
 category: kimson
 tags:
-  - NestJS
-  - TypeScript
+  - Redis
+  - LuaScript
 ---
 
 # 레디스 원자성 확보를 위한 분산락 처리
