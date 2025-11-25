@@ -13,8 +13,6 @@ kramdown:
   syntax_highlighter_opts:
     block:
       line_numbers: true
-  input: GFM
-  hard_wrap: false
 show_downloads: false
 markdown: kramdown
 encoding: UTF-8
