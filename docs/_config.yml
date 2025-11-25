@@ -13,6 +13,8 @@ kramdown:
   syntax_highlighter_opts:
     block:
       line_numbers: true
+  input: GFM
+  hard_wrap: false
 show_downloads: false
 markdown: kramdown
 encoding: UTF-8
@@ -28,6 +30,7 @@ plugins:
   - jekyll-github-metadata
   - jekyll-titles-from-headings
   - jekyll-feed
+  - packwerk_mermaid
 title_from_headings:
   enabled: true
   strip_title: false
@@ -68,6 +71,10 @@ search:
 
 # For copy button on code
 enable_copy_code_button: true
+
+mermaid:
+  version: "10"
+  path: "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"
 
 nav_sort: case_sensitive # Capital letters sorted before lowercase
 
