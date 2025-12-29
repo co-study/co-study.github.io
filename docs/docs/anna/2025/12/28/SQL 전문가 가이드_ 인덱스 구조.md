@@ -1,13 +1,12 @@
-
 ---
 layout: default
 parent: 안나 스터디
 title: SQL 전문가 가이드_ 인덱스 구조
 date: 2025-12-28
-author: "조안나"
+author: 조안나
 category: anna
 tags:
-  - Nest.js
+  - NestJS
 ---
 
 ## 가. 인덱스 기본 구조
@@ -80,9 +79,9 @@ SQL Server
 ![image.png](attachment:737b8753-f96b-4325-bd28-fc8522aff65c:image.png)
 
 - where sal > 1000
-    - 대부분 사원 연봉이 5000을 넢어 Index Full Scan을 하면 거의 모든 레코드에 대해 테이블 액세스가 발생해 Table Full Scan보다 오히려 불리
-    - 만약 sal이 인덱스 선두 칼럼이어서 Index Range Scan을 하더라도 마찬가지임
-    - 그런데도 여기서 인덱스가 사용된 것은 사용자가 first_rows 힌트를 이용해 옵티마이저 모드를 바꾸었기 때문임 - 즉 옵티마이저가 소트 연산을 생략함으로써 전체 집합 중 처음 일부만을 빠르게 리턴할 목적으로 Index Full Scan 방식을 선택한 것
+  - 대부분 사원 연봉이 5000을 넢어 Index Full Scan을 하면 거의 모든 레코드에 대해 테이블 액세스가 발생해 Table Full Scan보다 오히려 불리
+  - 만약 sal이 인덱스 선두 칼럼이어서 Index Range Scan을 하더라도 마찬가지임
+  - 그런데도 여기서 인덱스가 사용된 것은 사용자가 first_rows 힌트를 이용해 옵티마이저 모드를 바꾸었기 때문임 - 즉 옵티마이저가 소트 연산을 생략함으로써 전체 집합 중 처음 일부만을 빠르게 리턴할 목적으로 Index Full Scan 방식을 선택한 것
 
 ## 다. Index Unique Scan
 
@@ -113,9 +112,9 @@ Oracle의 실행계획
 ![image.png](attachment:9fdf7fe4-b55c-4f7e-8173-f4901e16801b:image.png)
 
 - INLIST ITERATOR
-    - 조건절 In-List(라고 부르는구나?)에 제공된 값의 종류만큼, 인덱스 탐색을 반복 수행함을 뜻한다.
-    - 이렇게 쿼리 작성자가 직접 성별에 대한 조건식을 추가해주면 Index Skip Scan에 의존하지 않고도 빠르게 결과 집합을 얻을 수 있다. 단 이처럼 In-List를 명시하려면 성별 값의 종류가 더 이상 늘지 않음이 보장되어야 한다. 그리고, In-List로 제공하는 값의 종류가 적어야 한다.
-    - In-List를 제공하는 튜닝 기법을 익히 알던 독자라면 Index Skip Scan이 옵티마이저가 내부적으로 In-List를 제공해주는 방식이라고 생각하기 쉽지만 내부 수행 원리는 전혀 다르다.
+  - 조건절 In-List(라고 부르는구나?)에 제공된 값의 종류만큼, 인덱스 탐색을 반복 수행함을 뜻한다.
+  - 이렇게 쿼리 작성자가 직접 성별에 대한 조건식을 추가해주면 Index Skip Scan에 의존하지 않고도 빠르게 결과 집합을 얻을 수 있다. 단 이처럼 In-List를 명시하려면 성별 값의 종류가 더 이상 늘지 않음이 보장되어야 한다. 그리고, In-List로 제공하는 값의 종류가 적어야 한다.
+  - In-List를 제공하는 튜닝 기법을 익히 알던 독자라면 Index Skip Scan이 옵티마이저가 내부적으로 In-List를 제공해주는 방식이라고 생각하기 쉽지만 내부 수행 원리는 전혀 다르다.
 
 ## 마. Index Fast Full Scan
 

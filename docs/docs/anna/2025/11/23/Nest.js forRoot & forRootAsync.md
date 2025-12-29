@@ -3,10 +3,10 @@ layout: default
 parent: 안나 스터디
 title: Nest.js forRoot & forRootAsync
 date: 2025-11-23
-author: "조안나"
+author: 조안나
 category: anna
 tags:
-  - Nest.js
+  - NestJS
 ---
 
 forRoot와 forRootAsync는 모두 모듈 초기화 시 필요한 옵션을 설정하는 함수입니다.

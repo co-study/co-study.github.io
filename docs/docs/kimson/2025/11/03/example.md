@@ -8,7 +8,7 @@ category: kimson
 tags:
   - NestJS
   - TypeScript
-  - Dependency Injection
+  - DependencyInjection
   - Backend
 ---
 
