@@ -2,9 +2,9 @@
 layout: default
 parent: 경남 스터디
 title: WebSocket Stress Test 이해하기
-date: 2025-11-03
-author: <이름>
-category: <docs 디렉토리 명>
+date: 2025-12-30
+author: 김경남
+category: kimson
 tags:
   - NestJS
   - TypeScript
