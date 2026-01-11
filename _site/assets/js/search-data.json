@@ -34,265 +34,426 @@
     
     "relUrl": "/docs/anna/2025/11/23/Nest.js%20forRoot%20&%20forRootAsync/"
   },"5": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "가. 인덱스 기본 구조",
+    "content": ". | B-Tree 인덱스 | . | 나무를 뒤집어 놓은 모양새. 맨 위가 root, 아래가 leaf이다 | 루트에서 리프 블록까지의 거리를 인덱스 깊이(Height)라고 부르며, 인덱스를 반복적으로 탐색할 때 성능에 영향을 미친다. | 리프 블록은 인덱스 키 값과 그 키 값에 해당하는 테이블 레코드를 찾아가는데 필요한 주소정보(ROWID)를 갖는다. 키 값이 같을 때는 ROWID 순으로 정렬된다. | 리프 블록은 항상 인덱스 키 값 순으로 정렬되어 있다. → 범위 스캔이 가능하다. | 정방향과 역방향 스캔이 둘 다 가능하도록 양방향 연결 리스트 구조로 연결돼있다. | . null 값을 인덱스에 저장한다면? . | Oracle: 인덱스 구성 컬럼이 모두 null인 레코드는 인덱스에 저장하지 않는다. 하나라도 값이 있으면 저장하는데, null 값을 맨 뒤에 저장한다. | SQL Server: 인덱스 구성 컬럼이 모두 null인 레코드도 인덱스에 저장한다. null 값을 맨 앞에 저장한다. | . ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#%EA%B0%80-%EC%9D%B8%EB%8D%B1%EC%8A%A4-%EA%B8%B0%EB%B3%B8-%EA%B5%AC%EC%A1%B0",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#가-인덱스-기본-구조"
+  },"6": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "나. 인덱스 탐색",
+    "content": "수평적 탐색 / 수직적 탐색 . | 수평적 탐색: 리프 블록끼리 좌에서 우로 스캔하는 탐색. | 수직적 탐색: 수평적 탐색을 위한 시작 지점을 찾는 과정으로, 루트에서 원하는 값을 가진 리프까지 탐색하는 것 | . ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#%EB%82%98-%EC%9D%B8%EB%8D%B1%EC%8A%A4-%ED%83%90%EC%83%89",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#나-인덱스-탐색"
+  },"7": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "2. 다양한 인덱스 스캔 방식",
+    "content": " ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#2-%EB%8B%A4%EC%96%91%ED%95%9C-%EC%9D%B8%EB%8D%B1%EC%8A%A4-%EC%8A%A4%EC%BA%94-%EB%B0%A9%EC%8B%9D",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#2-다양한-인덱스-스캔-방식"
+  },"8": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "가. Index Range Scan",
+    "content": ". | B-tree 인덱스의 가장 일반적이고 정상적인 형태의 액세스 방식 | . Oracle . | 1 . | ... INDEX (RANGE SCAN) OF 'EMP_DEPTNO_IDX'(INDEX) . | . SQL Server . | 1 . | ... Index Seek(OBJECT:([..].[dbo].[emp].[emp_deptno_idx]), SEEK:([deptno] = 20 ORDERED FORWARD) . | . | 인덱스를 수직적으로 탐색한 후에 리프 블록에서 ‘필요한 범위’만 스캔한다. | 인덱스를 스캔하는 범위(Range)를 얼마만큼 줄일 수 있느냐, 테이블로 액세스하는 횟수를 얼마만큼 줄일 수 있느냐가 관건이다. 이는 인덱스 설계와 SQL 튜닝의 핵심 원리 중 하나이다. | Index Range Scan이 가능하게 하려면 인덱스를 구성하는 선두 컬럼이 조건절에 사용되어야 한다. 그렇지 못한 상황에서 인덱스를 사용하도록 힌트로 강제하면, 바로 이어서 설명할 Index Full Scan 방식으로 처리된다. | Index Range Scan 과정을 거쳐 생성된 결과 집합은 인덱스 컬럼 순으로 정렬된 상태가 되기 때문에, 이런 특성을 잘 이용하면 osrt order by 연산을 생략하거나, min/max 값을 빠르게 추출할 수 있다. | . ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#%EA%B0%80-index-range-scan",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#가-index-range-scan"
+  },"9": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "나. Index Full Scan",
+    "content": ". | 수직적 탐색 없이, 인덱스 리프 블록을 처음부터 끝까지 수평적으로 탐색하는 방식이다. 대개는 데이터 검색을 위한 최적의 인덱스가 없을 때 차선으로 선택된다. | 실제로는, 맨 첫 리프 노드까지 가기 위해 한번의 수직적 탐색이 일어나긴 한다 (그림의 점선) | . Index Full Scan의 효용성 . | 인덱스 선두 컬럼이 조건절에 없으면, 옵티마이저는 우선적으로 Table Full Scan을 고려한다. 그런데 대용량 테이블이어서 Table Full Scan의 부담이 크다면, Index Full Scan을 고려한다. | 데이터 저장공간은 가로 X 세로 즉 컬럼길이 * 레코드수 에 의해 결정된다. 대개 인덱스가 차지하는 면적은 테이블보다 훨씬 적다. 만약 인덱스 스캔 단계에서 대부분 레코드를 필터링하고 일부에 대해서만 테이블 액세스가 발생하는 경우라면, 테이블 전체를 스캔하는 것보다 낫다. 이럴 때 옵티마이저는 Index Full Scan 방식을 선택할 수 있다. | . 인덱스를 이용한 소트 연산 대체 . | Index Full Scan은 Index Range Scan과 마찬가지로, 그 경로가 집합이 인덱스 컬럼 순으로 정렬되므로 Sort order By연산을 생략할 목적으로 사용될 수도 있다. (차선책 x 옵티마이저가 전략적으로 선택) | . | where sal &gt; 1000 . | 대부분 사원 연봉이 5000을 넢어 Index Full Scan을 하면 거의 모든 레코드에 대해 테이블 액세스가 발생해 Table Full Scan보다 오히려 불리 | 만약 sal이 인덱스 선두 칼럼이어서 Index Range Scan을 하더라도 마찬가지임 | 그런데도 여기서 인덱스가 사용된 것은 사용자가 first_rows 힌트를 이용해 옵티마이저 모드를 바꾸었기 때문임 - 즉 옵티마이저가 소트 연산을 생략함으로써 전체 집합 중 처음 일부만을 빠르게 리턴할 목적으로 Index Full Scan 방식을 선택한 것 | . | . ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#%EB%82%98-index-full-scan",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#나-index-full-scan"
+  },"10": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "다. Index Unique Scan",
+    "content": ". | 수직적 탐색만으로 데이터를 찾는 스캔 방식 | Unique 인덱스를 ‘=’ 조건으로 탐색하는 경우에 작동 | . Oracle의 실행계획 . | INDEX (UNIQUE SCAN) | SQL Server는 Range Scan 과, Unique Scan을 구분하지 않고 똑같이 Index Seek으로 표시한다. | . ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#%EB%8B%A4-index-unique-scan",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#다-index-unique-scan"
+  },"11": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "라. Index Skip Scan",
+    "content": ". | 원래 인덱스 선두 컬럼이 조건절에 사용되지 않으면 → Table Full Scan, 또는 I/O를 줄일 수 있거나 정렬된 결과를 쉽게 얻을 수 있을 때 Index Full Scan인데 | 오라클 9i 버전부터 인덱스 선두 컬럼이 조건절에 빠졌어도 인덱스를 활용하는 새로운 스캔방식을 선보임. 그게 Index Skip Scan이다. | . 예) 성별 - 연봉 인덱스가 있는 테이블에서 인덱스 선두 컬럼인 성별이 조건절에 없는 쿼리 실행시 . | Skip Scan 의 원리: 루트 또는 브랜치 블록에서 읽은 칼럼 값 정보를 이용해 조건에 부합하는 레코드를 포함할 ‘가능성이 있는’ 하위 블록(브랜치 또는 리프 블록)만 골라서 액세스 (가능성을 어케 판단하지?) | 이 스캔 방식은 조건절에 빠진 인덱스 선두 컬럼의 Distinct Value 개수가 적고, 후행 컬럼의 Distinct Value 개수가 많을 때 유용 | . | INLIST ITERATOR . | 조건절 In-List(라고 부르는구나?)에 제공된 값의 종류만큼, 인덱스 탐색을 반복 수행함을 뜻한다. | 이렇게 쿼리 작성자가 직접 성별에 대한 조건식을 추가해주면 Index Skip Scan에 의존하지 않고도 빠르게 결과 집합을 얻을 수 있다. 단 이처럼 In-List를 명시하려면 성별 값의 종류가 더 이상 늘지 않음이 보장되어야 한다. 그리고, In-List로 제공하는 값의 종류가 적어야 한다. | In-List를 제공하는 튜닝 기법을 익히 알던 독자라면 Index Skip Scan이 옵티마이저가 내부적으로 In-List를 제공해주는 방식이라고 생각하기 쉽지만 내부 수행 원리는 전혀 다르다. | . | . ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#%EB%9D%BC-index-skip-scan",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#라-index-skip-scan"
+  },"12": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "마. Index Fast Full Scan",
+    "content": ". | 말 그대로, Index Full Scan보다 빠른 검색 방식이다. | 이유는 인덱스 트리 구조를 무시하고 인덱스 세그먼트 전체를 Multiblock Read 방식으로 스캔하기 때문이다. Index Full Scan과의 차이점을 요약하면 다음과 같다: | . ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#%EB%A7%88-index-fast-full-scan",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#마-index-fast-full-scan"
+  },"13": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "바. Index Range Scan Descending",
+    "content": ". | Index Range Scan과 기본적으로 동일한 스캔 방식이다. 그림처럼 인덱스를 뒤에서부터 앞으로 스캔하기 때문에, 내림차순으로 정렬된 결과 집합을 얻는다는 점만 다르다. | . 예2 ) emp 테이블을 empno 기준으로 내림차순 정렬하는 쿼리이며, empno 컬럼에 인덱스가 있는 경우 . | 옵티마이저가 알아서 인덱스를 거꾸로 읽는 실행계획을 수립한다. | . SQL Server버전 . 예2 ) Max 값 구하기 . | Max 값을 구하려는 컬럼에 인덱스가 있으면, 인덱스를 뒤에서부터 한건만 읽고 멈추는 실행계획이 수립된다. | . ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#%EB%B0%94-index-range-scan-descending",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/#바-index-range-scan-descending"
+  },"14": {
+    "doc": "SQL 전문가 가이드_ 인덱스 구조",
+    "title": "SQL 전문가 가이드_ 인덱스 구조",
+    "content": " ",
+    "url": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/",
+    
+    "relUrl": "/docs/anna/2025/12/28/SQL%20%EC%A0%84%EB%AC%B8%EA%B0%80%20%EA%B0%80%EC%9D%B4%EB%93%9C_%20%EC%9D%B8%EB%8D%B1%EC%8A%A4%20%EA%B5%AC%EC%A1%B0/"
+  },"15": {
     "doc": "Bastion Server 이해하기",
     "title": "Bastion Server (베스천서버)",
     "content": "베스천서버는 흔히 점프서버라 말하며, 점프 호스트, 점프 박스 등으로 이야기하곤 한다. 점프서버는 두 개 이상 네트워크 사이에 중간 지역으로 존재하며 보안을 위해 거쳐야하는 보안 게이트의 개념이다. 점프서버는 보통 외부에서 함부로 접근하지 못하도록 접근을 제한하고 보안을 향상시키는데 사용된다. 주로 AWS에서 SSM(AWS Systems Manager)에서 다루어진다. VPC 내에 모든 리소스는 서로 접근 가능하지만 외부에서 ssh로 private subnet 리소스에 대한 직접 접근은 불가능 하다. flowchart LR A[Client] subgraph Public direction RL B[Public Server] end subgraph Private BA[Private Server1] BB[Private Server2] end subgraph VPC subgraph JumpServer[\"JumpServer (Public)\"] C[Bastion Server] end JumpServer Private end A--점프호스트 경유--&gt;JumpServer--접근 가능--&gt;Private A--직접 연결--&gt;B--접근 불가--xPrivate . 위 예시처럼 직접 접근하는 서버의 경우에는 VPC 내 private에는 접근할 수 없다. 하지만 점프호스트를 경유하게 된다면 베스쳔서버 접근 한다. VPC 내 리소스는 서로 공유가 가능기 때문에 베스천 서버는 해당 VPC내 Private 서버에 접근할 수 있고, 점프호스트를 통해 내부 서브넷으로 접근 할 수 있다. 대규모 프로젝트에서 주로 활용되며 보안상 접근을 제한하고 분리할 때 사용된다. ",
     "url": "/docs/kimson/2025/11/25/bastion-server-study/#bastion-server-%EB%B2%A0%EC%8A%A4%EC%B2%9C%EC%84%9C%EB%B2%84",
     
     "relUrl": "/docs/kimson/2025/11/25/bastion-server-study/#bastion-server-베스천서버"
-  },"6": {
+  },"16": {
     "doc": "Bastion Server 이해하기",
     "title": "베스천 서버 운용",
     "content": "베스천 서버 정보가 제공되면 이용은 간단하다. MobaXTerm이나 Putty, Xshell 등으로 점프 호스트를 입력하고 연결하고자 하는 내부 private subnet 정보를 입력해 연결을 자동화 해 둘 수 있다. ",
     "url": "/docs/kimson/2025/11/25/bastion-server-study/#%EB%B2%A0%EC%8A%A4%EC%B2%9C-%EC%84%9C%EB%B2%84-%EC%9A%B4%EC%9A%A9",
     
     "relUrl": "/docs/kimson/2025/11/25/bastion-server-study/#베스천-서버-운용"
-  },"7": {
+  },"17": {
     "doc": "Bastion Server 이해하기",
     "title": "프록시 서버와 다른 점",
     "content": "베스쳔 서버를 이해하는데 프록시와 자주 혼동된다. 프록시의 경우 주로 HTTP/HTTPS 프래픽을 중계해주는 역할을 한다. 특히나 “대리”로 요청을 처리한다는 게 주요 핵심 개념이다. 목적은 보안, 캐싱, 속도 향상, 차단, 필터링, 로드 밸런싱 등이며, 정적 리소스를 캐싱해서 속도 향상하는데 주로 사용된다. 대표적으로 리버스 프록시와 포워드 프록시가 있는데, 리버스의 경우 서버 앞단에서 요청을 분배하며 로드밸런싱에 주로 사용되며, 내부 서버가 직접 서비스 하지 않고, 리버스 프록시를 거쳐 응답하기 때문에 내부망의 IP 노출되지 않아 해킹을 부터 안전하기 위해 사용되기도 한다. 포워드의 경우 내부 직원 인터넷 요청을 필터링하는데 사용되며 클라이언트 앞단에서 요청을 받아 특정 사이트 접근 제한 등에 사용된다. 일종의 방화벽과 같은 개념이라 보면 된다. 베스쳔 서버는 프록시와 달리 내부망의 리소스 접근을 차단하는 방화벽 호스트의 성격이 강하다. 📅 작성일: 2025-11-25 ✍️ 작성자: 김경남 . ",
     "url": "/docs/kimson/2025/11/25/bastion-server-study/#%ED%94%84%EB%A1%9D%EC%8B%9C-%EC%84%9C%EB%B2%84%EC%99%80-%EB%8B%A4%EB%A5%B8-%EC%A0%90",
     
     "relUrl": "/docs/kimson/2025/11/25/bastion-server-study/#프록시-서버와-다른-점"
-  },"8": {
+  },"18": {
     "doc": "Bastion Server 이해하기",
     "title": "Bastion Server 이해하기",
     "content": " ",
     "url": "/docs/kimson/2025/11/25/bastion-server-study/",
     
     "relUrl": "/docs/kimson/2025/11/25/bastion-server-study/"
-  },"9": {
+  },"19": {
     "doc": "서비스 운영에 필요한 서버 스펙 정의",
     "title": "서비스 운영에 필요한 서버 스펙 정의",
     "content": " ",
     "url": "/docs/kimson/2025/11/06/calculate-traffic/",
     
     "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/"
-  },"10": {
+  },"20": {
     "doc": "서비스 운영에 필요한 서버 스펙 정의",
     "title": "서비스 수준 (Service Level)",
     "content": "서비스 수준에는 크게 세가지 용어로 설명한다. | 서비스 수준 목표(ServiceLevel Objectives, SLO): 시스템에서 기대되는 가용성을 설정한 목표. | 서비스 수준 지표(Service Level Indicators, SLI): 시스템의 가용성을 파악하기 위한 핵심 측정치와 지표. | 서비스 수준 계약(Service-Level agreements, SLA): 시스템이 SLO를 충족하지 못할 경우 발생하는 상황과 합의된 내용을 설명하는 법적 계약. | . 트래픽 산정을 다루기 위해 SLO 개념을 주로 다룹니다. 서비스 수준의 종류에 대한 비교와 상세 설명은 여기를 참조해주세요. ",
     "url": "/docs/kimson/2025/11/06/calculate-traffic/#%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%88%98%EC%A4%80-service-level",
     
     "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#서비스-수준-service-level"
-  },"11": {
+  },"21": {
     "doc": "서비스 운영에 필요한 서버 스펙 정의",
     "title": "스펙 산정의 과정",
     "content": ". | SLO 정의(성능 목표) . | 가용성: 예) 99.9% | . | 수요 모델링(Workload) . | 사용자 규모: DAU/WAU/MAU, 피크배율(평균 대비 최대 트래픽 배수) | 사용 패턴: 세션 길이, 페이지/분, API 호출/페이지, Think time | 트래픽 조합: GET/POST 비율, 실시간 여부, 배치 작업 유무 | . | 리소스 모델링(자원/비용) . | CPU, 메모리, 네트워크(대역폭/egress), 디스크(용량/IOPS/Throughput), DB/캐시 | 한 요청당 자원 사용량(서비스 시간, 쿼리 수, 바이트) | . | 검증(Load Test/관측) | 가설 수치로 부하 테스트 → 관측치로 모델 보정 → 여유분(헤드룸) 확정 | . 모델을 먼저 만들고, 실측으로 보정하는 편이 추정만 하는 것보다 좋다고 한다. ",
     "url": "/docs/kimson/2025/11/06/calculate-traffic/#%EC%8A%A4%ED%8E%99-%EC%82%B0%EC%A0%95%EC%9D%98-%EA%B3%BC%EC%A0%95",
     
     "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#스펙-산정의-과정"
-  },"12": {
+  },"22": {
     "doc": "서비스 운영에 필요한 서버 스펙 정의",
     "title": "핵심 공식",
     "content": ". | QPS/RPS(초당 요청 수) RPS = 동시활성 사용자 x 사용자당 RPS 사용자당 RPS = (페이지/분 x 페이지당 API콜 수) / 60 | 대역폭(Throughput) 초당 전송량(바이트/초) = RPS x 평균응답크기(바이트) 원본 서버 기준 트래픽 = 전체 트래픽 x (1 - 캐시적중률) | Little’s Law 동시요청수 L = λ(도착률 RPS) × W(평균 응답시간) 예) RPS=200, 평균=0.2초 → L=40개 동시 처리 필요 | CPU 활용도(단일 코어 근사) U = λ × S (S=평균 서비스시간/요청의 CPU점유 시간) 목표 활용도(ρ)를 0.6~0.7로 제한 → 필요 코어수 ≈ (λ × S) / ρ | DB IOPS DB RPS = App RPS x 요청당 쿼리수 x (1 - 캐시히트) 스토리지 IOPS/Throughput은 엔진, 인덱스, 트랜잭션 크기에 따라 상이 → 부하테스트로 보정 | 저장소 용량(로그/이벤트) 일간 데이터량 = 이벤트 수/일 x 평균 바이트 필요 용량 = 일간 x 보관일수 x (1 + 압축여유) | . ",
     "url": "/docs/kimson/2025/11/06/calculate-traffic/#%ED%95%B5%EC%8B%AC-%EA%B3%B5%EC%8B%9D",
     
     "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#핵심-공식"
-  },"13": {
+  },"23": {
     "doc": "서비스 운영에 필요한 서버 스펙 정의",
     "title": "계산 예시와 설명",
     "content": "문제를 가정하고 더 쉬운 풀이로 계산해나간다. | 동시에 쓰는 사람 수(피크 동시 사용자) . | 어디서: 구글 애널리틱스 동시 접속, 서버 로그(시간대별 요청), 없다면 합리적 추정(=평균의 3~10배) | 뜻: 가장 바쁠 때 한순간에 놀러 오는 사용자 수 | . | 한 사람이 1분에 몇 화면 보나(페이지/분) . | 뜻: 사용자이 1분에 몇개의 컨텐츠를 보는지 | 어디서: 프론트 로그/GA4, 없으면 1~3으로 가정 | . | 화면 하나에 API를 몇 번 요청하는지(API/화면) . | 뜻: 컨텐츠 하나 볼 때 서버로 몇 번 요청하는지 | 어디서: 네트워크 탭/백엔드 라우트 카운트(대개 1~5) | . | 응답 크기(바이트) . | 뜻: 서버에서 응답하는 데이터 크기 | 어디서: 서버 로그 response size 평균 (예: 10~50KB) | . | 목표 속도(응답시간) . | 뜻: 사용자 한 명을 평균 몇 초 만에 처리할지 (예: 평균 0.2초) | 어디서: APM/로그, 없으면 목표로 정함 (예: 0.1 ~ 0.3초) | . | 캐시 유무(적중률) . | 뜻: 자주 요청하는 건 미리 준비해서 바로 제공(정적/GET 캐시 적중률) | 어디서: CDN/프록시 통계(없으면 0~60% 가정) | . | 요청 하나에 DB를 몇 번 쿼리 요청하는지(쿼리/요청) (QPS) . | 뜻: 서버가 DB에 몇 번 조회 하는가 | 어디서: 쿼리 로깅/ORM 미들웨어 (예: 대개 1~5) | . | . 예시 계산 . 핵심 공식 일부를 사용해 모의로 트래픽을 계산한다. | 초당 요청 수(RPS): 동시 사용자 x 한 사람의 초당 요청 수 . | 한 사람 초당 요청 수: (페이지/분 x API/페이지) / 60 | 예) 페이지/분 2, API/페이지 2 → 4/60 = 0.0667 | 동시 50명 → RPS = 50 x 0.0667 = 약 3.33RPS | 즉, 초당 3.33개의 요청이 발생 | . | 동시 처리 요청 수: RPS x 평균 응답 시간(초) . | 예) 3.33 x 0.2초 = 0.666 (= 대략 0.67개) | 뜻: 서버가 동시에 붙잡고 있는 사용자 수 | . | 초당 데이터 양(대역폭): RPS x 평균 응답 크기 . | 예) 3.33 x 15KB = 약 50KB/s (= 약 0.4Mb/s) | . | 초당 DB 일(쿼리 수): RPS x (쿼리/요청) x (1 - 캐시 히트) . | 예) 쿼리/요청 2, 캐시 없음 → 3.33 x 2 = 6.66QPS | . | . 여기까지 계산하면 “얼마나 바쁜지” 눈에 보인다. 초당 3.33명이 사용하고, 동시에 1명을 처리중이며, 초당 50KB데이터가 응답되며, DB는 초당 6~7번 일한다. 서버 스펙 산정 . 서버(계산대), DB(창고 직원), 캐시/CDN(진열대)으로 나눈다. | 애플리케이션 서버(계산대) . | vCPU(계산대 수): 대략 동시요청 수 x 2배면 초보자 사용에 충분 이유는 스파이크, GC 등 버퍼가 필요하기 때문 . | 예) 동시 요청 = 약 1 → 2 vCPU 추천(최소 2개 = N + 1) | . | 메모리: 앱 기본 메모리 + (동시요청 x 요청당 임시 메모리 5~20MB) + 여유 30% . | 예) 기본 300MB + (1 x 10MB) → 1~2GB면 충분 | . | 네트워크: 대역폭 계산값 x 1.5 ~ 2배 . | 예) 50KB/s x 2 = 100KB/s 여유(클라우드 기본으로 충분) | . | . | 데이터베이스(창고 직원) . | QPS 보고 작은 사양으로 시작 + 인덱스/쿼리 튜닝 . | 예) 6~7 QPS명 소형 인스턴스도 무난 | . | 중요: 느린 쿼리를 해결하면 서버 스펙보다 효과 큼 | . | 캐시/CDN(진열대) . | GET 결과 30~120초 캐시만 해도 RPS/DB부하 크게 감소 | 이미지/정적 리소스는 CDN 기본 | . | . 실무에서 산정에 필요한 데이터 모으는 팁 . | 프론트/게이트웨이 로그: 라우트별 호출 수와 응답 크기 평균 | 하루 중 가장 바쁜 시간 30분 뽑기 → 피크 동시 사용자 근사값 추출 | 네트워크 탭 한 화면당 호출 개수 (대략치 판별) | APM/로그로 평균 응답 시간 확인(목표치 없으면 0.2초로 산정) | ORM/DB 로그로 요청당 쿼리 수 평균 산정 | . ",
     "url": "/docs/kimson/2025/11/06/calculate-traffic/#%EA%B3%84%EC%82%B0-%EC%98%88%EC%8B%9C%EC%99%80-%EC%84%A4%EB%AA%85",
     
     "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#계산-예시와-설명"
-  },"14": {
+  },"24": {
     "doc": "서비스 운영에 필요한 서버 스펙 정의",
     "title": "모의 계산",
     "content": "다음은 계산에 필요한 데이터 조건. | 동시 사용자: 50명 | 페이지/분 2, API/페이지 2 → 4/60 = 0.0667 | 평균 응답 0.2초, 평균 크기 15KB, QPS(쿼리/요청) 2 | . 계산 . | RPS = 50 x 0.0667 = 약 3.33(request/sec) | 동시요청 = 3.33 x 0.2 = 0.666 = 약 1 | 대역폭 = 3.33 x 15KB = 약 50KB/s | DB QPS = 3.33 x 2 = 6.66(query/sec) | . 스펙 제안 . | APP: 2 vCPU / 2GB x 2대 시작 | DB: 소형 + 모니터링 (느린 쿼리 튜닝) | CDN/캐시: 정적 필수, 목록/상세 GET 30~120초 캐시 | . ✅ 레퍼런스 . | 예상 트래픽 산정 | CPU vs vCPU | SLA,SLA,SLI 비교 | QPS, RPS 비교 | . 📅 작성일: 2025-11-06 03:18:24 ✍️ 작성자: 김경남 . ",
     "url": "/docs/kimson/2025/11/06/calculate-traffic/#%EB%AA%A8%EC%9D%98-%EA%B3%84%EC%82%B0",
     
     "relUrl": "/docs/kimson/2025/11/06/calculate-traffic/#모의-계산"
-  },"15": {
+  },"25": {
     "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "🧠 (예시) NestJS 의존성 주입 원리 이해하기",
     "content": ". ",
     "url": "/docs/kimson/2025/11/03/example/#-%EC%98%88%EC%8B%9C-nestjs-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%A3%BC%EC%9E%85-%EC%9B%90%EB%A6%AC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#-예시-nestjs-의존성-주입-원리-이해하기"
-  },"16": {
+  },"26": {
     "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "1️⃣ 어떤 주제로 공부했나요?",
     "content": "최근 NestJS로 프로젝트를 진행하면서 DI(Dependency Injection) 컨테이너 구조가 헷갈려서 의존성 주입의 원리와 실제 동작 방식을 정리해보았습니다. | NestJS의 DI가 어떻게 동작하는지 궁금했음 | Angular 기반 구조와의 유사점, 차이점이 있는지 확인하고 싶었음 | . ",
     "url": "/docs/kimson/2025/11/03/example/#1%EF%B8%8F%E2%83%A3-%EC%96%B4%EB%96%A4-%EC%A3%BC%EC%A0%9C%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%82%98%EC%9A%94",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#1️⃣-어떤-주제로-공부했나요"
-  },"17": {
+  },"27": {
     "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "2️⃣ 스터디 과정 (어떤 방식으로 공부했는가)",
     "content": ". | NestJS 공식문서 및 DI 관련 챕터 정독 NestJS Dependency Injection 공식문서 | 인프런 NestJS 강의 참고 | 팀원과 DI가 필요한 실제 사례를 들어 설계 토의 | 예시 실습: @Injectable()과 ModuleRef를 이용해 커스텀 Provider 작성 | . ",
     "url": "/docs/kimson/2025/11/03/example/#2%EF%B8%8F%E2%83%A3-%EC%8A%A4%ED%84%B0%EB%94%94-%EA%B3%BC%EC%A0%95-%EC%96%B4%EB%96%A4-%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%8A%94%EA%B0%80",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#2️⃣-스터디-과정-어떤-방식으로-공부했는가"
-  },"18": {
+  },"28": {
     "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "3️⃣ 알게 된 점",
     "content": ". | NestJS의 DI는 Angular에서 발전된 구조 사용 | 의존성 주입이 클래스 생성자 레벨에서 TypeScript의 타입 정보와 Reflect Metadata 기반으로 동작 | Provider 등록 시 Lazy Loading, Scope 변환 등 다양한 옵션 제공 | 복잡한 의존 관계를 효율적으로 관리할 수 있음 | . ",
     "url": "/docs/kimson/2025/11/03/example/#3%EF%B8%8F%E2%83%A3-%EC%95%8C%EA%B2%8C-%EB%90%9C-%EC%A0%90",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#3️⃣-알게-된-점"
-  },"19": {
+  },"29": {
     "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "4️⃣ 더 궁금한 점",
     "content": ". | Request 스코프 Provider의 주입 타이밍 및 라이프사이클 관리 | 커스텀 Provider 작성 시 내부적으로 어떤 Hook이 동작하는지 | DI 에러가 발생했을 때 디버깅 노하우 | . ",
     "url": "/docs/kimson/2025/11/03/example/#4%EF%B8%8F%E2%83%A3-%EB%8D%94-%EA%B6%81%EA%B8%88%ED%95%9C-%EC%A0%90",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#4️⃣-더-궁금한-점"
-  },"20": {
+  },"30": {
     "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "5️⃣ 결과적으로 느낀 점",
     "content": ". | DI를 제대로 이해하니 모듈화와 유지보수성이 높은 구조를 설계할 수 있을 것 같음 | NestJS의 내부 동작을 이해하는 데 도움이 되었음 | 다음 스터디에선 AOP 개념과 Interceptor를 연계해보고자 함 | . 📅 작성일: 2025-11-03 ✍️ 작성자: GPT5 . ",
     "url": "/docs/kimson/2025/11/03/example/#5%EF%B8%8F%E2%83%A3-%EA%B2%B0%EA%B3%BC%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%8A%90%EB%82%80-%EC%A0%90",
     
     "relUrl": "/docs/kimson/2025/11/03/example/#5️⃣-결과적으로-느낀-점"
-  },"21": {
+  },"31": {
     "doc": "(예시) NestJS 의존성 주입 원리 이해하기",
     "title": "(예시) NestJS 의존성 주입 원리 이해하기",
     "content": " ",
     "url": "/docs/kimson/2025/11/03/example/",
     
     "relUrl": "/docs/kimson/2025/11/03/example/"
-  },"22": {
-    "doc": "안나 스터디",
-    "title": "안나 스터디",
-    "content": "테스트 . ",
-    "url": "/docs/anna/",
-    
-    "relUrl": "/docs/anna/"
-  },"23": {
+  },"32": {
     "doc": "경남 스터디",
     "title": "경남 스터디",
     "content": "테스트 . ",
     "url": "/docs/kimson/",
     
     "relUrl": "/docs/kimson/"
-  },"24": {
+  },"33": {
+    "doc": "안나 스터디",
+    "title": "안나 스터디",
+    "content": "테스트 . ",
+    "url": "/docs/anna/",
+    
+    "relUrl": "/docs/anna/"
+  },"34": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "레디스 원자성 확보를 위한 분산락 처리",
     "content": "레디스는 노드와 유사하게 싱글 스레드로 동작한다. 단일 레디스 노드를 구축해 사용해도 동시성 문제는 발생하지 않는다. 따라서 리소스에 대해 값이 설정된 경우 다른 리소스 접근을 차단할 수 있다. 이를 잠금이라 표현하고, 이를 다음과 같이 명령을 사용해 재현할 수 있다. ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/"
-  },"25": {
+  },"35": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "Lock(락)의 개념",
     "content": "“락을 회득한다”라는 말을 자주 사용하게 되는데, 공유 자원을 혼자 안전하게 사용하기 위해 다른 클라이언트가 접근하지 못하게 점유권을 빌리는 것을 말한다. 즉, 재고가 10일 경우, A와 B가 서로 수정하려 할 때 한 순간에 오직 하나의 클라이언트만 재고 수정 가능하게 만드는 장치를 락이라 한다. ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/#lock%EB%9D%BD%EC%9D%98-%EA%B0%9C%EB%85%90",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/#lock락의-개념"
-  },"26": {
+  },"36": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "락 유무에 따른 시나리오",
     "content": "자원: stock:drink001 (현 재고: 10) . | clientA: 재고 +5 증가 예정 | clientB: 재고 -3 감소 예정 | 동시에 요청 발생 | . 만약 두 요청이 GET/SET 한다면? . 락 없는 경우 . | 1 2 3 4 . | # clientA 수정 시도 GET stock:drink001 # -&gt; 10 # 계산: 10 + 5 = 15 SET stock:drink001 15 . | . | 1 2 3 4 . | # clientB 수정 시도 (거의 동시 수행 가정하고 서로 GET한 시점이 같을 때) GET stock:drink001 # -&gt; 10 (clientA SET 전) # 계산: 10 - 3 = 7 SET stock:drink001 7 . | . 이 경우 최종 재고가 7이 되고, clientA의 작업이 완전 날아가버린다. 이를 경쟁 조건(Race Condition)이라한다. 이 때문에 공유 자원을 두고 안정하게 데이터를 사용하거나 수정하기 위해 락이 필요하다. ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/#%EB%9D%BD-%EC%9C%A0%EB%AC%B4%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/#락-유무에-따른-시나리오"
-  },"27": {
+  },"37": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "락 획득(Acquire the lock)",
     "content": "레디스에서는 아래와 같이 표현 된다. | 1 . | SET lock:stock:drink001 &lt;UUID&gt; NX EX 10 . | . 이 한 줄이 “락 획득”이 된다. 락 획득의 조건은 다음과 같다. 락 획득 조건 . | NX: 락 키가 없을 때만 생성 | EX 10: 락은 10초 후 자동 제거 | «UUID»: 락 소유자를 식별하는 일종의 신분증 역할(인증 토큰 개념) | . 락 획득 성공 조건 . 누구든 먼저 이 명령을 성공하면 그 자원을 점유하는 상태가 된다. | 1 2 . | SET lock:stock:drink001 C1_UUID NX EX 10 # 성공 -&gt; clientA가 락을 획득 . | . | 1 2 . | SET lock:stock:drink001 C2_UUID NX EX 10 # 실패 -&gt; 해당 락키가 있기 때문에 접근 불가 . | . ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/#%EB%9D%BD-%ED%9A%8D%EB%93%9Dacquire-the-lock",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/#락-획득acquire-the-lock"
-  },"28": {
+  },"38": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "락 획득 후 달라지는 점",
     "content": "clientA는 이제 다음처럼 안전하게 데이터 변경 가능 . | 1 2 3 4 . | # 현재 재고 GET stock:drink001 # 10 # 계산 SET stock:drink001 &lt;10 + n&gt; . | . 작업 이후 락을 풀어줘야 하는데 아래와 같이 락을 풀게 된다. | 1 . | DEL lock:stock:drink001 . | . 여기서 문제가 발생하는데 client가 요청할 때 동시성 문제로 인해 아래와 같은 시나리오라면 큰 문제가 발생할 수 있다. | clientA가 락 획득 | 어떤 타이밍에 clientB가 다시 락 획득 | clientA가 늦게 작업 된 경우 DEL 명령 | clientB의 락 해제 | . 위와 같은 시나리오는 “lock:” 키를 설정할 때 만료시간 보다 더 긴 작업이 있을 경우 충분히 발생할 수 있는 문제다. 때문에 단순히 DEL 명령으로 제거하면 안되고, 해당 lock키의 uuid 값이 유효한지 검증한 후 제거해야한다. ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/#%EB%9D%BD-%ED%9A%8D%EB%93%9D-%ED%9B%84-%EB%8B%AC%EB%9D%BC%EC%A7%80%EB%8A%94-%EC%A0%90",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/#락-획득-후-달라지는-점"
-  },"29": {
+  },"39": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "레디스의 트랜젝션",
     "content": "레디스는 MySQL과 같은 SQL 계열의 DB와 달리 다른 의미의 트랜젝션을 수행한다. SQL의 트랜젝션과 같이 여러 개의 명령을 하나의 묶음으로 만들어 순서대로 실행하고, 명령 순서가 보장된다. 레디스에서 롤백 기능이 없고 SQL처럼 예외 발생 시 데이터를 되돌리는 기능이 없다. 일부 WATCH 기반의 낙관적 락에서는 예외이다. 때문에 원자성이 완벽하게 보장되지 않는 문제가 발생한다. 레디스에서 제공하는 트랜젝션은 3가지 명령이 있는데, MULTI, WATCH, EXEC이며, 3가지 명령을 조합해서 사용하더라도 락 획득 실패하거나 데이터 수정 실패 시 실패한 요청의 경우 모든 프로세스가 정지되는 현상이 발생한다. ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/#%EB%A0%88%EB%94%94%EC%8A%A4%EC%9D%98-%ED%8A%B8%EB%9E%9C%EC%A0%9D%EC%85%98",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/#레디스의-트랜젝션"
-  },"30": {
+  },"40": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "레디스 원자적 작업",
     "content": "레디스에서는 lua 스크립트 실행을 지원한다. 위 설명했던 트랜젝션을 구현하는데 단점을 보완하여 lua 스크립트를 활용하면 훨씬 강력하고 안정한 트랜젝션을 구현할 수 있다. lua 스크립트는 레디스 내부에서 스크립트를 한 명령처럼 실행하기 때문에 “조건 확인 + 업데이터 + 삭제” 전체가 “불가분 원자적”이다. 락 해제, 재고감소와 같은 복잡한 로직에 필수적으로 사용된다. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 . | async function veryHeavyLogic() { const lockKey = \"lock:stock:drink001\"; const stockKey = \"stock:drink001\"; const lockUUID = nanoid(16); const calcValue = 5; await redis.eval(` local lockKey = KEY[1] local stockKey = KEY[2] local lockUUID = ARGV[1] local value = ARGV[2] if redis.call('GET', lockKey) == lockUUID then redis.call('SET', stockKey, value) redis.call('DET', lockKey) end `, lockKey, stockKey, 2, lockUUID, calcValue); } . | . 위와 같이 lua 스크립트를 활용하면 스크립트 한 묶음을 하나의 명령처럼 처리하기 때문에 안전하게 원자적으로 데이터를 점유하고 수정가능하게 된다. 다른 클라이언트와 동시에 수정하더라도 다른 클라이언트의 요청은 실패하고 안전하게 데이터 수정이 용이하게 된다. 실패한 요청은 큐를 이용해 재시도하거나 버리는 식의 처리가 가능해진다. ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/#%EB%A0%88%EB%94%94%EC%8A%A4-%EC%9B%90%EC%9E%90%EC%A0%81-%EC%9E%91%EC%97%85",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/#레디스-원자적-작업"
-  },"31": {
+  },"41": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "마무리",
     "content": "레디스를 단순히 Key-Value 쌍의 인메모리 DB로 생각하고 간단한 세션 관리나 소켓과 유사하게 브로드캐스트하는 용도로만 생각했지만, 트랜젝션 관리와 lua 스크립트 결합을 통해 동시성에 관한 기술적인 이해도를 높인 좋은 기회였다. 오늘 다룬 내용은 분산락에 대한 개념이자, 레디스가 제공하는 분산락(레드락)의 한계를 lua 스크립트로 보완하는 내용을 주로 다룬다. 앞으로 락에 관한 키워드로 낙관락, 비관락을 이해하고 더 공부해야겠다는 생각이 든다. ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/#%EB%A7%88%EB%AC%B4%EB%A6%AC",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/#마무리"
-  },"32": {
+  },"42": {
     "doc": "레디스 원자성 확보를 위한 분산락 처리",
     "title": "레퍼런스",
     "content": ". | 레디스가 제공하는 분산락(RedLock) | node.js 환경에서 redis 분산락 구현 | . 📅 작성일: 2025-11-16 11:45:03 ✍️ 작성자: 김경남 . ",
     "url": "/docs/kimson/2025/11/16/redis-transaction/#%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4",
     
     "relUrl": "/docs/kimson/2025/11/16/redis-transaction/#레퍼런스"
-  },"33": {
+  },"43": {
+    "doc": "WebSocket Stress Test 이해하기 01",
+    "title": "웹소켓 부하 테스트",
+    "content": "웹 소켓은 웹에서 사용하는 소켓이라는 말로, 소켓과 웹소켓은 맥락 상 개념은 같지만 쓰임새가 다르다. 쉽게 보자면 소켓이 상위 개념이다. 소켓은 TCP/UDP에 기반하고 대부분의 네트워크 소켓은 인터넷 소켓이다. 웹소켓은 웹에서 소켓 프로토콜을 사용할 수 있게 하며, TCP 접속에 양방향 통신인 전이중 통신 채널을 제공하는 컴퓨터 통신 프로토콜이다. ",
+    "url": "/docs/kimson/2025/12/30/stress-test-for-websocket/#%EC%9B%B9%EC%86%8C%EC%BC%93-%EB%B6%80%ED%95%98-%ED%85%8C%EC%8A%A4%ED%8A%B8",
+    
+    "relUrl": "/docs/kimson/2025/12/30/stress-test-for-websocket/#웹소켓-부하-테스트"
+  },"44": {
+    "doc": "WebSocket Stress Test 이해하기 01",
+    "title": "부하 테스트의 구현",
+    "content": "부하 테스트 조건은 다음과 같다. socketio기반으로 구성된 웹소켓 서버로 사용자가 연결되고 각 신호에 맞게 게임을 플레이한다. | 사용자 연결 시 토큰 검증 | 확인 후 join 이벤트 처리 | 룸 마스터의 start 신호에 맞춰 게임 플레이 | 플레이 로직 진행 | 종료 | . 게임의 종류가 4가지이고, 4가지 모두 시작 시점, 플레이 방식, 종료 시점이 다르기 때문에 유저 플로우를 세밀하게 조절할 수 있는 도구를 선택한다. ",
+    "url": "/docs/kimson/2025/12/30/stress-test-for-websocket/#%EB%B6%80%ED%95%98-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%9D%98-%EA%B5%AC%ED%98%84",
+    
+    "relUrl": "/docs/kimson/2025/12/30/stress-test-for-websocket/#부하-테스트의-구현"
+  },"45": {
+    "doc": "WebSocket Stress Test 이해하기 01",
+    "title": "테스트 도구 종류",
+    "content": "부하 테스트 도구로는 여러가지가 있으니 몇 가지만 소개한다. | jmeter (java) | k6 (javascript + k6 module) | artillery (javascript) | locust (Python) | . 그 외 golang으로 개발된 도구도 있지만 인기도와 커뮤니티 규모를 봤을 때 추천하는 것으로만 추렸다. ",
+    "url": "/docs/kimson/2025/12/30/stress-test-for-websocket/#%ED%85%8C%EC%8A%A4%ED%8A%B8-%EB%8F%84%EA%B5%AC-%EC%A2%85%EB%A5%98",
+    
+    "relUrl": "/docs/kimson/2025/12/30/stress-test-for-websocket/#테스트-도구-종류"
+  },"46": {
+    "doc": "WebSocket Stress Test 이해하기 01",
+    "title": "도구별 특징",
+    "content": "jmeter는 너무나 유명해서 추가 설명이 필요없을 정도이다. jemeter는 유저 플로우를 견고하게 짤 수 있고, 헤더, 바디, 조건문, 루프문 등 상세한 옵션 설정 또한 가능하다. 하지만 UI/UX가 너무 오래되기도 했고, 설정하는게 여간 불편하다. artillery는 웹소켓 테스트 도구에서는 꽤 이름이 있다. 설정이 간편하고, yml 스크립트로 간편하게 시나리오와 플로우를 구현할 수 있다. 다만, 성능상으로 테스트 도구 자체가 부하가 생기는 일이 발생한다는 소문도 있고, 빠르고 가볍게 테스트 해야할 때는 적합할 것 같다. 상세한 플로우 조절이 불가하지는 않지만 processor를 통한 커스텀 스크립트로 조정해야하기 때문에 꽤 손이 많이 가게 된다. locust는 artillery와 다르게 테스트 환경을 코드로 작성하게 된다. 추가로 대시보드를 UI로 제공하기 때문에 잘만 쓰면 grafana없이도 간단한 테스트와 지표를 한 번에 해결할 수 있다. 다만 python으로 코드를 짜야한다는 점과 websocket 중 socketio의 호환이 완벽하지 않은 점이 큰 단점이다. socketio의 경우 메세지를 보내는 emit 기능은 구현되어 있으나 중요한 listening 기능이 없어 해당 기능이 필요한 경우 울며 겨자먹기로 websocket기반으로 전환해 직접 socketio 프로토콜을 파싱하는 경우도 있다. (그게 나다) . 마지막으로 k6는 그라파나에서 만든 테스트 도구로 locust와 유사하게 코드로 테스트 환경을 구성한다. javascript 기반이고 socketio를 지원하는 xk6 라이브러리의 확장이 있기 때문에 socketio도 커버 가능하다. 다만, k6를 설치하는 것과 해당 테스트 스크립트 내 사용되는 모듈이 k6에 의한 모듈만 사용할 수 있어 그 점이 좀 아쉽다. 즉, node의 기본 모듈이나 fetch함수를 사용하지 못한다는 단점이 있다. 하지만 단점보다 장점이 워낙 많기에 k6를 사용하지 않나 싶다. 지표분석을 하려면 InfluxDB와 Grafana를 사용한다. k6 메트릭스를 대시보드로 제공하는 기본 템플릿도 있으니 매우 간편하게 부하테스트를 할 수 있다. ",
+    "url": "/docs/kimson/2025/12/30/stress-test-for-websocket/#%EB%8F%84%EA%B5%AC%EB%B3%84-%ED%8A%B9%EC%A7%95",
+    
+    "relUrl": "/docs/kimson/2025/12/30/stress-test-for-websocket/#도구별-특징"
+  },"47": {
+    "doc": "WebSocket Stress Test 이해하기 01",
+    "title": "레퍼런스",
+    "content": ". | 웹소켓 성능 분석(k6) 참조 | Locust 웹소켓 예시 참조 | 웹소켓과 소켓 차이 | 전이중, 반이중, 단방향 통신 참조 | . 📅 작성일: 2025-12-30 ✍️ 작성자: 김경남 . ",
+    "url": "/docs/kimson/2025/12/30/stress-test-for-websocket/#%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4",
+    
+    "relUrl": "/docs/kimson/2025/12/30/stress-test-for-websocket/#레퍼런스"
+  },"48": {
+    "doc": "WebSocket Stress Test 이해하기 01",
+    "title": "WebSocket Stress Test 이해하기 01",
+    "content": " ",
+    "url": "/docs/kimson/2025/12/30/stress-test-for-websocket/",
+    
+    "relUrl": "/docs/kimson/2025/12/30/stress-test-for-websocket/"
+  },"49": {
+    "doc": "WebSocket Stress Test 이해하기 02",
+    "title": "부하 테스트 톺아보기",
+    "content": ". ",
+    "url": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#%EB%B6%80%ED%95%98-%ED%85%8C%EC%8A%A4%ED%8A%B8-%ED%86%BA%EC%95%84%EB%B3%B4%EA%B8%B0",
+    
+    "relUrl": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#부하-테스트-톺아보기"
+  },"50": {
+    "doc": "WebSocket Stress Test 이해하기 02",
+    "title": "부하 테스트의 오해",
+    "content": "이번 부하 테스트를 주제로 작성한 내용을 보완하고자 한다. 나는 지금까지 부하테스트 = 스트레스 테스트 로 자주 이야기 했다. 특히 이 문서의 타이틀인 “WebSocket Stress Test 이해하기 02”와 메인 타이틀인 “부하 테스트의 오해”만 봐도 잘못된 부분이 있다. 이 글을 읽고 난 후에는 무엇이 다르고 왜 잘못된 것인지 알게 된다. 이는 엄연히 다른 카테고리의 이야기이다. 결론부터 말하자면 부하테스트는 “성능 테스트”의 하위 개념이고 서로 목적 또한 다르다. ",
+    "url": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#%EB%B6%80%ED%95%98-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%9D%98-%EC%98%A4%ED%95%B4",
+    
+    "relUrl": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#부하-테스트의-오해"
+  },"51": {
+    "doc": "WebSocket Stress Test 이해하기 02",
+    "title": "성능 테스트 (Performance Test)",
+    "content": "부하 테스트를 말하기 위해 우리는 “성능 테스트”가 무엇인지 알고 넘어가야 한다. 성능 테스트는 시스템이 특적 조건에서 어떤 성능을 보이는지 검증하는 모든 테스트의 총칭이다. 단순히 “빠른가?”를 보는 테스트는 아니다. 보통은 성능 테스트를 통해 다음을 확인한다. | 요청을 얼마나 많이 처리할 수 있는가 | 응답 시간은 어느 시점부터 느려지는가 | 리소스(CPU, 메모리, 네트워크)는 어떻게 사용되는가 | 장애 상황에서 시스템은 어떻게 무너지는가 | 트래픽 증가에 따라 수평 확장이 가능한가 | . 즉, 성능 테스트는 시스템 한계, 안정성, 확장성까지 포함하는 매우 넓은 개념이다. ",
+    "url": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#%EC%84%B1%EB%8A%A5-%ED%85%8C%EC%8A%A4%ED%8A%B8-performance-test",
+    
+    "relUrl": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#성능-테스트-performance-test"
+  },"52": {
+    "doc": "WebSocket Stress Test 이해하기 02",
+    "title": "성능 테스트의 주요 종류",
+    "content": "성능 테스트는 보통 다음과 같은 테스트를 포함한다. | 부하 테스트 (Load Test) 예상되는 정상 트래픽을 시스템이 감당할 수 있는가? . | 목표: 정상적인 최대 트래픽에서의 안정성 확인 | 관점: . | 평균 응답 시간 | TPS / RPS | 에러율 | 리소스 사용량 | . | 예: . | 동적 10,000명일 때, 서버는 어떻게 반응하는가? 실서비스 기준선을 잡기 위한 테스트 | . | . | 스트레스 테스트 (Stress) 한계를 넘으면 시스템은 어떻게 무너지는가? . | 목표: 시스템 임계점(Breaking Point) 확인 | 관점: . | 언제 타임아웃이 발생하는가 | 어떤 컴포넌트부터 죽는가 | 복구는 가능한가 | . | 예: . | 동적 10,000명일 때, 서버는 어떻게 반응하는가? 장애 대응과 복구 전략을 위한 테스트 | . | . | 스파이크 테스트 (Spike) 트래픽이 순간적으로 튀면 버틸 수 있는가? . | 목표: 급격한 트래픽 변화 대응 능력 확인 | 관점: . | 급증 시 에러 발생 여부 | 오토스케일링 반응 속도 | . | 예: . | 이벤트 시작과 동시에 트래픽이 10배 증가 이벤트성 트래픽, 알림 푸시, 배치 작업 이후에 중요 | . | . | 확장성 테스트 (Scalability) 서버를 늘리면 성능도 비례해서 늘어나는가? . | 목표: 수평/수직 확장의 효율성 검증 | 관점: . | 서버 추가 대비 처리량 증가 비율 | 병목 구간 식별 | . | 예: . | 서버를 2대 → 4대로 늘리면 TPS도 2배가 되는가? MSA, 클라우드 환경에서 특히 중요 | . | . | 볼륨 테스트 (Volume) 데이터가 많아지면 시스템은 어떻게 되는가? . | 목표: 대용량 데이터 처리 안정성 확인 | 관점: . | DB 성능 저하 | 인덱스 영향 | 쿼리 시간 변화 | . | 예: . | 로그 데이터가 1억 건일 때도 정상 동작하는가? 장기 운영 서비스에서 반드시 필요 | . | . | . ",
+    "url": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#%EC%84%B1%EB%8A%A5-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%9D%98-%EC%A3%BC%EC%9A%94-%EC%A2%85%EB%A5%98",
+    
+    "relUrl": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#성능-테스트의-주요-종류"
+  },"53": {
+    "doc": "WebSocket Stress Test 이해하기 02",
+    "title": "실제로 작업 하는 부하 테스트 이해하기",
+    "content": "이번에 부하 테스트를 담당하면서 도대체 무얼 어떻게 해야 하는지 감을 잡지 못했다. 확실한 건 내가 무엇을 하는지 알아야 했기 때문에 부하 테스트가 무엇인지부터가 시작이라 생각했다. 지금 보면 내가 담당한 부하 테스트는 성능 테스트의 일부로, 부하와 스트레스에 대한 테스트를 담당하고 그 부하를 눈으로 확인할 수 있게 모니터링 환경을 구축하는 것이다. 즉, 고객사에서 생각하는 접속자와 그 접속자를 감당할 수 있는 소켓 서버인가를 검증해내야 한다. 단위 테스트처럼 에러를 만들어내는 단계와 달리 실제 서비스에 가깝게 시나리오를 만들고, 정상 상태에서의 지표를 수집하고, 모니터링과 함께 보는 환경을 결과물로 만들어야 한다. 부하 테스트는 말 그대로 “부하”에 대한 테스트이다. 때문에 소켓 서버의 부하라 함은 n명의 접속자가 보내는 정상 트래픽을 감당할 수 있는지에 대한 것이다. | n명의 접속자를 받아들이는가? | 접속자를 받을 때 CPU와 메모리 중 어느 쪽에 부하가 많이 걸리는가? | n명 접속 후 얼마나 소켓을 안정적으로 유지하는가? | 리소스의 사용량이 얼마나 되는가? | . 그 외 많은 것을 뽑아낼 수 있겠지만 대표적으로 생각나는 테스트 검증 항목은 위와 같다. 스트레스 테스트의 경우 다음과 같이 검증할 수 있다. | n명의 접속자 요청이 어느 정도 발생해야 서버가 죽는가? | 어느 정도 트래픽이 발생해야 임계치가 되는가? | 한계에 도달 할 때 어떤 대응을 할 수 있는가? | 동시 접속자를 최대치로 설정했을 때 서버는 어떤 상태가 되는가? | . 이 두 가지 테스트를 모니터링과 연계해서 서버가 어떤 상태인지, 어떻게 변하는지 기록하고 각 상태를 어떻게 해석해야 하는지를 정리해 내는게 나의 담당 업무라 생각한다. 성능 테스트 중 두 가지 이외의 테스트는 기회가 되면 다뤄보려한다. ",
+    "url": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#%EC%8B%A4%EC%A0%9C%EB%A1%9C-%EC%9E%91%EC%97%85-%ED%95%98%EB%8A%94-%EB%B6%80%ED%95%98-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0",
+    
+    "relUrl": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#실제로-작업-하는-부하-테스트-이해하기"
+  },"54": {
+    "doc": "WebSocket Stress Test 이해하기 02",
+    "title": "마무리",
+    "content": "각 테스트는 성격이 다르지만 비슷한 점이 있다. 이 비슷한 점을 없애지는 못해도 목표와 추출해야 하는 요소와 이유를 명확히 한다면 각 테스트 환경을 구축하고 설정하는데 도움이 되지 않을까 생각한다. 중구난방으로 “대충 이런거겠지”해버리면 이후에 잘못 설계해서 중복된 값을 추출하거나 각 테스트 업무 자체가 모호해질 수 있기 때문이다. 📅 작성일: 2026-01-10 ✍️ 작성자: 김경남 . ",
+    "url": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#%EB%A7%88%EB%AC%B4%EB%A6%AC",
+    
+    "relUrl": "/docs/kimson/2026/01/10/stress-test-for-websocket02/#마무리"
+  },"55": {
+    "doc": "WebSocket Stress Test 이해하기 02",
+    "title": "WebSocket Stress Test 이해하기 02",
+    "content": " ",
+    "url": "/docs/kimson/2026/01/10/stress-test-for-websocket02/",
+    
+    "relUrl": "/docs/kimson/2026/01/10/stress-test-for-websocket02/"
+  },"56": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "🧠 스터디 주제: (예: NestJS 의존성 주입 원리 이해하기)",
     "content": ". ",
     "url": "/template/template-study/#-%EC%8A%A4%ED%84%B0%EB%94%94-%EC%A3%BC%EC%A0%9C-%EC%98%88-nestjs-%EC%9D%98%EC%A1%B4%EC%84%B1-%EC%A3%BC%EC%9E%85-%EC%9B%90%EB%A6%AC-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0",
     
     "relUrl": "/template/template-study/#-스터디-주제-예-nestjs-의존성-주입-원리-이해하기"
-  },"34": {
+  },"57": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "1️⃣ 어떤 주제로 공부했나요?",
     "content": ". | 주제 배경, 선택 이유 | 관련된 기술 스택 혹은 문제 상황 | . 예시: . 최근 NestJS로 프로젝트를 진행하면서 DI 컨테이너 구조가 헷갈려서 원리를 정리해봤어요. ",
     "url": "/template/template-study/#1%EF%B8%8F%E2%83%A3-%EC%96%B4%EB%96%A4-%EC%A3%BC%EC%A0%9C%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%82%98%EC%9A%94",
     
     "relUrl": "/template/template-study/#1️⃣-어떤-주제로-공부했나요"
-  },"35": {
+  },"58": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "2️⃣ 스터디 과정 (어떤 방식으로 공부했는가)",
     "content": ". | 문서, 영상, 공식 문서 링크 등 참고 자료 | 실습 코드나 실험 과정 | 팀원과 토의한 내용 | . 예시: . 공식 문서와 NestJS 소스 코드를 분석하면서 @Injectable()과 ModuleRef 동작 방식을 비교했습니다. ",
     "url": "/template/template-study/#2%EF%B8%8F%E2%83%A3-%EC%8A%A4%ED%84%B0%EB%94%94-%EA%B3%BC%EC%A0%95-%EC%96%B4%EB%96%A4-%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C-%EA%B3%B5%EB%B6%80%ED%96%88%EB%8A%94%EA%B0%80",
     
     "relUrl": "/template/template-study/#2️⃣-스터디-과정-어떤-방식으로-공부했는가"
-  },"36": {
+  },"59": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "3️⃣ 알게 된 점",
     "content": ". | 새롭게 이해한 개념, 깨달음 | 기존과 달랐던 점 | . 예시: . NestJS의 DI는 Angular에서 발전된 구조로, Provider 등록 시 Lazy Loading이 가능하다는 걸 알게 됐어요. ",
     "url": "/template/template-study/#3%EF%B8%8F%E2%83%A3-%EC%95%8C%EA%B2%8C-%EB%90%9C-%EC%A0%90",
     
     "relUrl": "/template/template-study/#3️⃣-알게-된-점"
-  },"37": {
+  },"60": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "4️⃣ 더 궁금한 점",
     "content": ". | 추가로 파고들고 싶은 개념 | 아직 명확하지 않은 부분 | . 예시: . 스코프가 Request일 때 Provider 주입 타이밍이 어떻게 관리되는지 더 알고 싶어요. ",
     "url": "/template/template-study/#4%EF%B8%8F%E2%83%A3-%EB%8D%94-%EA%B6%81%EA%B8%88%ED%95%9C-%EC%A0%90",
     
     "relUrl": "/template/template-study/#4️⃣-더-궁금한-점"
-  },"38": {
+  },"61": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "5️⃣ 결과적으로 느낀 점",
     "content": ". | 이번 스터디로 얻은 인사이트나 감정 | 다음 스터디 계획 | . 예시: . 단순히 “DI가 된다”가 아니라 내부 구조를 이해하니 아키텍처 설계에 자신감이 생겼어요. 다음엔 AOP 개념과 Interceptor를 이어서 공부해보려 합니다. 📅 작성일: 2025-11-03 ✍️ 작성자: @yourname . ",
     "url": "/template/template-study/#5%EF%B8%8F%E2%83%A3-%EA%B2%B0%EA%B3%BC%EC%A0%81%EC%9C%BC%EB%A1%9C-%EB%8A%90%EB%82%80-%EC%A0%90",
     
     "relUrl": "/template/template-study/#5️⃣-결과적으로-느낀-점"
-  },"39": {
+  },"62": {
     "doc": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "title": "스터디 주제: _(예: NestJS 의존성 주입 원리 이해하기)_",
     "content": " ",
     "url": "/template/template-study/",
     
     "relUrl": "/template/template-study/"
-  },"40": {
+  },"63": {
     "doc": "테스트 포스트",
     "title": "테스트 포스트",
     "content": "☘️ 우왕 . ",
     "url": "/docs/anna/2025/11/03/test/",
     
     "relUrl": "/docs/anna/2025/11/03/test/"
-  },"41": {
+  },"64": {
     "doc": "🚀 로컬 개발 환경 설정 가이드",
     "title": "🚀 로컬 개발 환경 설정 가이드",
     "content": "# 🚀 로컬 개발 환경 설정 가이드 ## 필수 사항 로컬에서 Jekyll을 실행할 때 GitHub Pages와 동일하게 작동하려면 다음 명령어를 사용해야 합니다. ## 설치 ```bash # 1. Ruby 설치 확인 ruby --version # 2. Bundler 설치 (없는 경우) gem install bundler # 3. 의존성 설치 bundle install ``` ## 실행 방법 ### 올바른 실행 방법 (GitHub Pages와 동일) ```bash # 프로젝트 루트에서 실행 bundle exec jekyll serve --source docs --destination _site ``` 또는 더 간단하게: ```bash cd docs bundle exec jekyll serve ``` ### 서버 시작 후 브라우저에서 `http://localhost:4000` 또는 `http://127.0.0.1:4000`으로 접속하세요. ## 문제 해결 ### Remote Theme가 적용되지 않는 경우 1. **플러그인 확인** - `_config.yml`에 `jekyll-remote-theme`이 `plugins` 목록에 있는지 확인 - `bundle list | grep remote` 명령어로 플러그인 설치 확인 2. **네트워크 연결 확인** - Remote theme는 GitHub에서 테마를 다운로드해야 하므로 인터넷 연결이 필요합니다 - 방화벽이나 프록시 설정이 GitHub API 접근을 막고 있는지 확인 3. **캐시 삭제** ```bash rm -rf .jekyll-cache rm -rf _site bundle exec jekyll clean bundle exec jekyll serve --source docs ``` 4. **플러그인 재설치** ```bash bundle update jekyll-remote-theme bundle exec jekyll serve --source docs ``` ## 빌드 명령어 (GitHub Actions와 동일) ```bash bundle exec jekyll build -s docs -d _site ``` ## 추가 팁 - `--incremental` 옵션을 사용하면 변경된 파일만 재빌드하여 더 빠릅니다: ```bash bundle exec jekyll serve --source docs --incremental ``` - `--livereload` 옵션을 사용하면 파일 변경 시 자동으로 브라우저가 새로고침됩니다: ```bash bundle exec jekyll serve --source docs --livereload ``` ",
     "url": "/LOCAL_SETUP/",
     
     "relUrl": "/LOCAL_SETUP/"
-  },"42": {
+  },"65": {
     "doc": "🌱 Study Archive",
     "title": "🌱 Study Archive",
     "content": "# 🌱 Study Archive > **공부는 나 혼자 하는 게 아니라, 서로의 생각을 엮는 과정이다.** > 이 공간은 각자 배운 것을 Markdown으로 기록하고, 서로의 관점을 공유하는 스터디 블로그입니다. --- ## 📚 스터디 목록 ### ▶️ 2025년도 - [예시 양식](template-study.md) --- ## ✏️ 스터디 작성 가이드 새로운 스터디를 추가하려면 `/docs//연/월/일` 폴더 안에 다음 양식을 복사해 새로운 `.md` 파일로 작성하면 됩니다 👇 - 파일명 형식: `title.md` (예: `nestjs-di-study.md`) - 포맷: [공통 스터디 템플릿](template-study.md) > 💡 파일명에 날짜를 포함하면 Jekyll이 자동으로 날짜를 인식합니다. > 💡 카테고리별 메뉴에서 자동으로 분류되어 표시됩니다. ",

@@ -7,3 +7,4 @@ gem "webrick", "~> 1.9"
 gem "tzinfo-data"
 gem 'jekyll-target-blank'
 gem 'packwerk_mermaid'
+gem 'texture'

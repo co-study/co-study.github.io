@@ -1,7 +1,7 @@
 ---
 layout: default
 parent: 경남 스터디
-title: WebSocket Stress Test 이해하기
+title: WebSocket Stress Test 이해하기 01
 date: 2025-12-30
 author: 김경남
 category: kimson

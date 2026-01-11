@@ -15,6 +15,7 @@ gem install bundler
 
 # 3. 의존성 설치
 bundle install
+
 ```
 
 ## 실행 방법
@@ -24,6 +25,7 @@ bundle install
 ```bash
 # 프로젝트 루트에서 실행
 bundle exec jekyll serve --source docs --destination _site
+
 ```
 
 또는 더 간단하게:
@@ -31,6 +33,7 @@ bundle exec jekyll serve --source docs --destination _site
 ```bash
 cd docs
 bundle exec jekyll serve
+
 ```
 
 ### 서버 시작 후
@@ -55,18 +58,21 @@ bundle exec jekyll serve
    rm -rf _site
    bundle exec jekyll clean
    bundle exec jekyll serve --source docs
+
    ```
 
 4. **플러그인 재설치**
    ```bash
    bundle update jekyll-remote-theme
    bundle exec jekyll serve --source docs
+
    ```
 
 ## 빌드 명령어 (GitHub Actions와 동일)
 
 ```bash
 bundle exec jekyll build -s docs -d _site
+
 ```
 
 ## 추가 팁
@@ -74,10 +80,11 @@ bundle exec jekyll build -s docs -d _site
 - `--incremental` 옵션을 사용하면 변경된 파일만 재빌드하여 더 빠릅니다:
   ```bash
   bundle exec jekyll serve --source docs --incremental
+
   ```
 
 - `--livereload` 옵션을 사용하면 파일 변경 시 자동으로 브라우저가 새로고침됩니다:
   ```bash
   bundle exec jekyll serve --source docs --livereload
-  ```
 
+  ```
